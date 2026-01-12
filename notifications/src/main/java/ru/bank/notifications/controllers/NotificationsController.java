@@ -1,0 +1,27 @@
+package ru.bank.notifications.controllers;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import ru.bank.notifications.dto.NotificationDTO;
+import ru.bank.notifications.models.Notification;
+import ru.bank.notifications.services.NotificationsService;
+
+@Controller
+@RequestMapping("/v1/notifications")
+public class NotificationsController {
+
+  @Autowired
+  private NotificationsService notificationsService;
+
+  @PostMapping("/send")
+  ResponseEntity<String> sendNotification(@RequestBody NotificationDTO dto) {
+    notificationsService.sendNotification(new Notification(dto.text(), dto.username()));
+
+    return ResponseEntity.noContent().build();
+  }
+
+}
