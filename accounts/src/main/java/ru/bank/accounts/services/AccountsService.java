@@ -1,5 +1,6 @@
-package ru.bank.accounts;
+package ru.bank.accounts.services;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +44,7 @@ public class AccountsService {
       throw new ConflictException("Can't to update account info");
     }
 
-    var updated = new Account(accountDTO.id(), account.getLogin(), accountDTO.fullname(), accountDTO.birthdate(),
+    var updated = new Account(accountDTO.id(), account.getLogin(), accountDTO.fullname(), LocalDate.parse(accountDTO.birthdate()),
         accountDTO.amount());
 
     accountsJpaRepository.save(updated);

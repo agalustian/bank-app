@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.bank.accounts.AccountsService;
+import ru.bank.accounts.services.AccountsService;
 import ru.bank.accounts.dto.AccountDTO;
 import ru.bank.accounts.dto.AccountShortInfoDTO;
 

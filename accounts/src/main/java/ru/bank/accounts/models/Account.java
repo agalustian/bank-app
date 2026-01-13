@@ -4,14 +4,16 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.persistence.Id;
+import java.time.LocalDate;
 import java.util.Objects;
+import java.util.UUID;
 
 @Entity
 @Table(name = "accounts")
 public class Account {
 
   @Id
-  private String id;
+  private UUID id;
 
   @Column(name = "login", nullable = false, updatable = false)
   private String login;
@@ -19,13 +21,13 @@ public class Account {
   @Column(name = "fullname", nullable = false)
   private String fullname;
 
-  @Column(name = "birthdate", nullable = false)
-  private String birthdate;
+  @Column(name = "birthdate")
+  private LocalDate birthdate;
 
   @Column(name = "amount", nullable = false)
   private Integer amount;
 
-  public Account(String id, String login, String fullname, String birthdate, Integer amount) {
+  public Account(UUID id, String login, String fullname, LocalDate birthdate, Integer amount) {
     this.id = id;
     this.login = login;
     this.fullname = fullname;
@@ -33,7 +35,7 @@ public class Account {
     this.amount = amount;
   }
 
-  public Account(String login, String fullname, String birthdate, Integer amount) {
+  public Account(String login, String fullname, LocalDate birthdate, Integer amount) {
     this.login = login;
     this.fullname = fullname;
     this.birthdate = birthdate;
@@ -42,7 +44,7 @@ public class Account {
 
   public Account() {}
 
-  public String getId() {
+  public UUID getId() {
     return id;
   }
 
@@ -54,7 +56,7 @@ public class Account {
     return fullname;
   }
 
-  public String getBirthdate() {
+  public LocalDate getBirthdate() {
     return birthdate;
   }
 
