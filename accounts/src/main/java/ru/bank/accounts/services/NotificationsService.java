@@ -13,12 +13,12 @@ public class NotificationsService {
     this.notificationsControllerApi = notificationsControllerApi;
   }
 
-  void notify(String username, String text) {
+  public String sendNotification(String username, String text) {
     var notification = new NotificationDTO();
     notification.setUsername(username);
     notification.setText(text);
 
-    notificationsControllerApi.sendNotification(notification);
+    return notificationsControllerApi.sendNotification(notification);
   }
 
 }

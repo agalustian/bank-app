@@ -56,8 +56,9 @@ public class AccountsService {
     }
 
     if (!Objects.equals(account.getAmount(), accountDTO.amount())) {
-      notificationsOutboxJpaRepository.save(new NotificationOutbox("username",
-          "Account balance changed from" + account.getAmount() + "to" + accountDTO.amount()));
+      notificationsOutboxJpaRepository.save(new NotificationOutbox(account.getFullname(),
+          "Account balance changed from" + account.getAmount() + "to" + accountDTO.amount()
+      ));
     }
 
     var updated =

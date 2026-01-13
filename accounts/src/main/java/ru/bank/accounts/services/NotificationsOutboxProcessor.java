@@ -16,7 +16,7 @@ import ru.bank.accounts.repositories.NotificationsOutboxJpaRepository;
 public class NotificationsOutboxProcessor {
 
   @Value("${NOTIFICATIONS_OUTBOX_LIMIT:10}")
-  private Integer limit;
+  private Integer limit = 10;
 
   private final NotificationsOutboxJpaRepository notificationsOutboxJpaRepository;
 
@@ -31,15 +31,19 @@ public class NotificationsOutboxProcessor {
   }
 
   @Scheduled(fixedDelayString = "PT1s")
+  public void processBySchedule() {
+    process();
+  }
+
   public void process() {
     // TODO use sorting
     var outboxNotifications =
-        notificationsOutboxJpaRepository.findAll(PageRequest.of(0, limit).withSort(Sort.by("id")));
+        notificationsOutboxJpaRepository.findAll(PageRequest.of(0, limit).withSort(Sort.by("id"))).getContent();
 
     List<Long> processedIds = new ArrayList<>();
     for (NotificationOutbox notificationOutbox: outboxNotifications) {
       try {
-        notificationsService.notify(notificationOutbox.getUsername(), notificationOutbox.getText());
+        notificationsService.sendNotification(notificationOutbox.getUsername(), notificationOutbox.getText());
         processedIds.add(notificationOutbox.getId());
       } catch (RuntimeException e) {
         logger.error("Exception occurred on sending notifications to: {}, error: {}", notificationOutbox.getUsername(), e.getStackTrace());

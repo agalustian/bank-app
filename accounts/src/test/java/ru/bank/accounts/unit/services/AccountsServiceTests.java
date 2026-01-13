@@ -3,6 +3,8 @@ package ru.bank.accounts.unit.services;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -16,6 +18,7 @@ import ru.bank.accounts.dto.AccountDTO;
 import ru.bank.accounts.dto.AccountShortInfoDTO;
 import ru.bank.accounts.errors.NotFoundException;
 import ru.bank.accounts.models.Account;
+import ru.bank.accounts.models.NotificationOutbox;
 import ru.bank.accounts.repositories.AccountsJpaRepository;
 import ru.bank.accounts.repositories.NotificationsOutboxJpaRepository;
 import ru.bank.accounts.services.AccountsService;
@@ -99,6 +102,19 @@ class AccountsServiceTests {
       var foundAccount = accountsService.updateAccountByLogin("test", updatePayload);
 
       assertEquals(updatePayload, foundAccount);
+    }
+
+    @Test
+    void shouldSaveToOutbox() {
+      var account = generateAccount();
+      var updatePayload = new AccountDTO(account.getId(), account.getFullname(), account.getBirthdate().format(
+          DateTimeFormatter.ISO_LOCAL_DATE), 1);
+
+      Mockito.when(accountsJpaRepository.findAccountByLogin("test")).thenReturn(Optional.of(account));
+
+      accountsService.updateAccountByLogin("test", updatePayload);
+
+      verify(notificationsOutboxJpaRepository, times(1)).save(any(NotificationOutbox.class));
     }
 
     @Test
