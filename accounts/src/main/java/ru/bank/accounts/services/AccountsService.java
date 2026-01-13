@@ -3,7 +3,6 @@ package ru.bank.accounts.services;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import ru.bank.accounts.dto.AccountDTO;
@@ -16,8 +15,11 @@ import ru.bank.accounts.repositories.AccountsJpaRepository;
 @Service
 public class AccountsService {
 
-  @Autowired
-  private AccountsJpaRepository accountsJpaRepository;
+  private final AccountsJpaRepository accountsJpaRepository;
+
+  public AccountsService(AccountsJpaRepository accountsJpaRepository) {
+    this.accountsJpaRepository = accountsJpaRepository;
+  }
 
   private Account findOrThrowAccount(final String login) {
     return accountsJpaRepository.findAccountByLogin(login).orElseThrow(() -> new NotFoundException("Account not found"));
