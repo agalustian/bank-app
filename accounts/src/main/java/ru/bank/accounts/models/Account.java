@@ -16,14 +16,22 @@ public class Account {
   @Column(name = "login", nullable = false, updatable = false)
   private String login;
 
-  @Column(name = "fullname", nullable = false, updatable = false)
+  @Column(name = "fullname", nullable = false)
   private String fullname;
 
-  @Column(name = "birthdate", nullable = false, updatable = false)
+  @Column(name = "birthdate", nullable = false)
   private String birthdate;
 
   @Column(name = "amount", nullable = false)
   private Integer amount;
+
+  public Account(String id, String login, String fullname, String birthdate, Integer amount) {
+    this.id = id;
+    this.login = login;
+    this.fullname = fullname;
+    this.birthdate = birthdate;
+    this.amount = amount;
+  }
 
   public Account(String login, String fullname, String birthdate, Integer amount) {
     this.login = login;
