@@ -1,6 +1,8 @@
 package ru.bank.notifications.dto;
 
-import jakarta.validation.constraints.NotNull;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
 
-public record NotificationDTO(@NotNull String text, @NotNull String username) {
+@Schema(description = "Нотификация")
+public record NotificationDTO(@NotBlank String text, @NotBlank String username) {
 }
