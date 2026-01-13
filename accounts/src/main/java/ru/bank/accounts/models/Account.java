@@ -1,15 +1,10 @@
 package ru.bank.accounts.models;
 
-//логин пользователя (аккаунт связывается с вошедшим пользователем по этому логину и логину из JWT);
-//фамилия и имя;
-//дата рождения;
-//количество денег на счету.
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
+import jakarta.persistence.Id;
 import java.util.Objects;
-import org.springframework.data.annotation.Id;
 
 @Entity
 @Table(name = "accounts")
