@@ -17,13 +17,17 @@ import ru.bank.accounts.dto.AccountShortInfoDTO;
 import ru.bank.accounts.errors.NotFoundException;
 import ru.bank.accounts.models.Account;
 import ru.bank.accounts.repositories.AccountsJpaRepository;
+import ru.bank.accounts.repositories.NotificationsOutboxJpaRepository;
 import ru.bank.accounts.services.AccountsService;
 
 class AccountsServiceTests {
 
   private final AccountsJpaRepository accountsJpaRepository = Mockito.mock(AccountsJpaRepository.class);
+  private final NotificationsOutboxJpaRepository notificationsOutboxJpaRepository =
+      Mockito.mock(NotificationsOutboxJpaRepository.class);
 
-  private final AccountsService accountsService = new AccountsService(accountsJpaRepository);
+  private final AccountsService accountsService =
+      new AccountsService(accountsJpaRepository, notificationsOutboxJpaRepository);
 
   private Account generateAccount() {
     return new Account(UUID.randomUUID(), "test", "fullname", LocalDate.now(), 10000);
@@ -103,7 +107,8 @@ class AccountsServiceTests {
 
       Mockito.when(accountsJpaRepository.findAccountByLogin("test")).thenReturn(Optional.of(account));
 
-      assertThrows(NotFoundException.class, () -> accountsService.updateAccountByLogin("unknown", AccountDTO.from(account)), "Account not found");
+      assertThrows(NotFoundException.class,
+          () -> accountsService.updateAccountByLogin("unknown", AccountDTO.from(account)), "Account not found");
     }
 
     @Test
@@ -113,7 +118,8 @@ class AccountsServiceTests {
 
       Mockito.when(accountsJpaRepository.findAccountByLogin("test")).thenReturn(Optional.of(account));
 
-      assertThrows(NotFoundException.class, () -> accountsService.updateAccountByLogin("unknown", dto), "Account not found");
+      assertThrows(NotFoundException.class, () -> accountsService.updateAccountByLogin("unknown", dto),
+          "Account not found");
     }
 
   }

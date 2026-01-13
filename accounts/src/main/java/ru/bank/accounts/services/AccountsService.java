@@ -4,25 +4,33 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import ru.bank.accounts.dto.AccountDTO;
 import ru.bank.accounts.dto.AccountShortInfoDTO;
 import ru.bank.accounts.errors.ConflictException;
 import ru.bank.accounts.errors.NotFoundException;
 import ru.bank.accounts.models.Account;
+import ru.bank.accounts.models.NotificationOutbox;
 import ru.bank.accounts.repositories.AccountsJpaRepository;
+import ru.bank.accounts.repositories.NotificationsOutboxJpaRepository;
 
 @Service
 public class AccountsService {
 
   private final AccountsJpaRepository accountsJpaRepository;
 
-  public AccountsService(AccountsJpaRepository accountsJpaRepository) {
+  private final NotificationsOutboxJpaRepository notificationsOutboxJpaRepository;
+
+  public AccountsService(AccountsJpaRepository accountsJpaRepository,
+                         NotificationsOutboxJpaRepository notificationsOutboxJpaRepository) {
     this.accountsJpaRepository = accountsJpaRepository;
+    this.notificationsOutboxJpaRepository = notificationsOutboxJpaRepository;
   }
 
   private Account findOrThrowAccount(final String login) {
-    return accountsJpaRepository.findAccountByLogin(login).orElseThrow(() -> new NotFoundException("Account not found"));
+    return accountsJpaRepository.findAccountByLogin(login)
+        .orElseThrow(() -> new NotFoundException("Account not found"));
   }
 
   public AccountDTO getAccountByLogin(final String login) {
@@ -37,6 +45,7 @@ public class AccountsService {
     return accountsJpaRepository.findAll().stream().map(AccountShortInfoDTO::from).toList();
   }
 
+  @Transactional
   public AccountDTO updateAccountByLogin(final String login, AccountDTO accountDTO) {
     Assert.notNull(login, "login is required for updating account info");
 
@@ -46,8 +55,14 @@ public class AccountsService {
       throw new ConflictException("Can't to update account info");
     }
 
-    var updated = new Account(accountDTO.id(), account.getLogin(), accountDTO.fullname(), LocalDate.parse(accountDTO.birthdate()),
-        accountDTO.amount());
+    if (!Objects.equals(account.getAmount(), accountDTO.amount())) {
+      notificationsOutboxJpaRepository.save(new NotificationOutbox("username",
+          "Account balance changed from" + account.getAmount() + "to" + accountDTO.amount()));
+    }
+
+    var updated =
+        new Account(accountDTO.id(), account.getLogin(), accountDTO.fullname(), LocalDate.parse(accountDTO.birthdate()),
+            accountDTO.amount());
 
     accountsJpaRepository.save(updated);
 
