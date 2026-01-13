@@ -1,4 +1,6 @@
 package ru.bank.notifications.dto;
 
-public record NotificationDTO(String text, String username) {
+import jakarta.validation.constraints.NotNull;
+
+public record NotificationDTO(@NotNull String text, @NotNull String username) {
 }

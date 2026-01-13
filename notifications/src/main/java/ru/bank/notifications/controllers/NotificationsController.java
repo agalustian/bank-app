@@ -1,5 +1,6 @@
 package ru.bank.notifications.controllers;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -18,7 +19,7 @@ public class NotificationsController {
   private NotificationsService notificationsService;
 
   @PostMapping("/send")
-  ResponseEntity<String> sendNotification(@RequestBody NotificationDTO dto) {
+  ResponseEntity<String> sendNotification(@Valid @RequestBody NotificationDTO dto) {
     notificationsService.sendNotification(new Notification(dto.text(), dto.username()));
 
     return ResponseEntity.noContent().build();
