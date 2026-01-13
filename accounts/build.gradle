@@ -1,7 +1,10 @@
+import org.openapitools.generator.gradle.plugin.tasks.GenerateTask
+
 plugins {
     id "java"
     id "org.springframework.boot" version "3.5.6"
     id "io.spring.dependency-management" version "1.1.7"
+    id "org.openapi.generator" version "7.12.0"
 }
 
 group = "ru.bank"
@@ -14,12 +17,17 @@ java {
     }
 }
 
-sourceSets.main.java.srcDir "$projectDir/build/generated/src/main/java"
-
 repositories {
     mavenCentral()
 }
 
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java', "$projectDir/build/generated/src/main/java"]
+        }
+    }
+}
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
@@ -59,3 +67,19 @@ tasks.register("integrationTest", Test) {
         events "passed", "skipped", "failed"
     }
 }
+
+tasks.register("buildNotificationsClient", GenerateTask) {
+    generatorName.set("spring")
+    inputSpec.set("$projectDir/src/main/resources/notifications.json")
+    outputDir.set("$projectDir/build/generated")
+    modelPackage.set("ru.bank.accounts.notifications.domain")
+    apiPackage.set("ru.bank.accounts.notifications..api")
+    configOptions.set([
+            sourceFolder: "src/gen/java/main/codegen",
+            interfaceOnly: "false",
+            library: "spring-boot",
+            useTags: "true"
+    ])
+}
+
+compileJava.dependsOn tasks.buildNotificationsClient
