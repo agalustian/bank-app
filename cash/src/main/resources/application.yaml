@@ -1,6 +1,15 @@
 server:
-  port: 8082
+  port: ${REST_PORT:8083}
 
 spring:
   application:
     name: cash
+  main:
+    banner-mode: off
+  datasource:
+    url: ${PG_URL}
+    username: ${PG_USERNAME}
+    password: ${PG_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  liquibase:
+    change-log: "classpath:/db/changelog/db.changelog-master.yaml"
