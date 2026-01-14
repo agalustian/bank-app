@@ -1,15 +1,15 @@
 package ru.bank.accounts.services;
 
 import org.springframework.stereotype.Service;
-import ru.bank.accounts.notifications.client.api.NotificationsControllerApi;
+import ru.bank.accounts.notifications.client.api.NotificationsServiceApi;
 import ru.bank.accounts.notifications.domain.NotificationDTO;
 
 @Service
 public class NotificationsService {
 
-  private final NotificationsControllerApi notificationsControllerApi;
+  private final NotificationsServiceApi notificationsControllerApi;
 
-  public NotificationsService(NotificationsControllerApi notificationsControllerApi) {
+  public NotificationsService(NotificationsServiceApi notificationsControllerApi) {
     this.notificationsControllerApi = notificationsControllerApi;
   }
 

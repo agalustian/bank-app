@@ -4,7 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 import ru.bank.accounts.notifications.client.ApiClient;
-import ru.bank.accounts.notifications.client.api.NotificationsControllerApi;
+import ru.bank.accounts.notifications.client.api.NotificationsServiceApi;
 
 @Configuration
 public class NotificationServiceClientConfig {
@@ -19,8 +19,8 @@ public class NotificationServiceClientConfig {
   }
 
   @Bean
-  NotificationsControllerApi notificationsControllerApi(ApiClient apiClient) {
-    return new NotificationsControllerApi();
+  NotificationsServiceApi notificationsControllerApi(ApiClient apiClient) {
+    return new NotificationsServiceApi();
   }
 
 }

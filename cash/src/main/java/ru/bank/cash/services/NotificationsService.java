@@ -1,16 +1,16 @@
 package ru.bank.cash.services;
 
 import org.springframework.stereotype.Service;
-import ru.bank.cash.notifications.client.api.NotificationsControllerApi;
+import ru.bank.cash.notifications.client.api.NotificationsServiceApi;
 import ru.bank.cash.notifications.domain.NotificationDTO;
 
 @Service
 public class NotificationsService {
 
-  private final NotificationsControllerApi notificationsControllerApi;
+  private final NotificationsServiceApi notificationsServiceApi;
 
-  public NotificationsService(NotificationsControllerApi notificationsControllerApi) {
-    this.notificationsControllerApi = notificationsControllerApi;
+  public NotificationsService(NotificationsServiceApi notificationsServiceApi) {
+    this.notificationsServiceApi = notificationsServiceApi;
   }
 
   public String sendNotification(String username, String text) {
@@ -18,7 +18,7 @@ public class NotificationsService {
     notification.setUsername(username);
     notification.setText(text);
 
-    return notificationsControllerApi.sendNotification(notification);
+    return notificationsServiceApi.sendNotification(notification);
   }
 
 }
