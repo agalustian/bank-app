@@ -4,3 +4,12 @@ server:
 spring:
   application:
     name: transfer
+  main:
+    banner-mode: off
+  datasource:
+    url: ${PG_URL}
+    username: ${PG_USERNAME}
+    password: ${PG_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  liquibase:
+    change-log: "classpath:/db/changelog/db.changelog-master.yaml"
