@@ -13,7 +13,7 @@ public class TransferController {
   @PutMapping("/transfer")
   public ResponseEntity<?> transfer(ProxyExchange<byte[]> proxy) {
     String path = proxy.path("/api");
-    return proxy.uri("http://localhost:8085" + path).get();
+    return proxy.uri("http://localhost:8085" + path).put();
   }
 
 }

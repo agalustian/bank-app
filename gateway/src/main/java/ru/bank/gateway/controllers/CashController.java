@@ -13,13 +13,13 @@ public class CashController {
   @PutMapping("/cash/deposit")
   public ResponseEntity<?> deposit(ProxyExchange<byte[]> proxy) {
     String path = proxy.path("/api");
-    return proxy.uri("http://localhost:8083" + path).get();
+    return proxy.uri("http://localhost:8083" + path).put();
   }
 
   @PutMapping("/cash/withdrawal")
   public ResponseEntity<?> withdrawal(ProxyExchange<byte[]> proxy) {
     String path = proxy.path("/api");
-    return proxy.uri("http://localhost:8083" + path).get();
+    return proxy.uri("http://localhost:8083" + path).put();
   }
 
 }

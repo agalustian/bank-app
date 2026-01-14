@@ -26,7 +26,7 @@ public class AccountsController {
   @PutMapping("/accounts")
   public ResponseEntity<?> updateAccount(ProxyExchange<byte[]> proxy) {
     String path = proxy.path("/api");
-    return proxy.uri("http://localhost:8084" + path).get();
+    return proxy.uri("http://localhost:8084" + path).put();
   }
 
 }
