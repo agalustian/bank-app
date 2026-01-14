@@ -1,4 +1,4 @@
-package ru.bank.notifications;
+package ru.bank.cash;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
