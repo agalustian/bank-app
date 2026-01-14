@@ -13,3 +13,9 @@ spring:
     driver-class-name: org.postgresql.Driver
   liquibase:
     change-log: "classpath:/db/changelog/db.changelog-master.yaml"
+
+services:
+  notifications:
+    url: ${NOTIFICATIONS_URL}
+  accounts:
+    url: ${ACCOUNTS_URL}

@@ -33,6 +33,8 @@ public class NotificationOutbox {
     this.username = username;
   }
 
+  public NotificationOutbox() {}
+
   public Long getId() {
     return id;
   }

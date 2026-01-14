@@ -59,7 +59,7 @@ public class DepositOutboxProcessor {
       }
     }
 
-    logger.info("Successfully sent ids: {}", processedIds);
+    logger.debug("Successfully sent ids: {}", processedIds);
 
     depositOutboxJpaRepository.deleteAllByIdInBatch(processedIds);
   }

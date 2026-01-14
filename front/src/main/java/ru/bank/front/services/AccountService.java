@@ -7,6 +7,7 @@ import ru.bank.front.accounts.domain.AccountShortInfoDTO;
 import ru.bank.front.cash.client.api.CashServiceApi;
 import ru.bank.front.cash.domain.EditMoneyDTO;
 import ru.bank.front.dto.CashAction;
+import ru.bank.front.dto.EditCashResult;
 import ru.bank.front.dto.TransferResult;
 import ru.bank.front.transfer.client.api.TransferServiceApi;
 
@@ -47,29 +48,39 @@ public class AccountService {
     return accountsServiceApi.listAccountShortInfo();
   }
 
-  public AccountDTO editCash(String login, int amount, CashAction action) {
+  public EditCashResult editCash(String login, int amount, CashAction action) {
     var amountDTO = new EditMoneyDTO();
     amountDTO.setAmount(amount);
 
-    switch (action) {
-      case GET -> cashServiceApi.withdrawalMoney(amountDTO);
-      case PUT -> cashServiceApi.depositMoney(amountDTO);
+    var accountDTO = getAccount(login);
+    String message = null;
+    List<String> errors = null;
+    try {
+      switch (action) {
+        case GET -> cashServiceApi.withdrawalMoney(amountDTO);
+        case PUT -> cashServiceApi.depositMoney(amountDTO);
+      }
+
+      message = "Успешно выполнено";
+    } catch (RuntimeException e) {
+      errors = List.of("Не удалось произвести операцию");
     }
 
-    return getAccount(login);
+    return new EditCashResult(accountDTO, message, errors);
   }
 
-  public TransferResult transfer(int value, String login, String toAccount) {
+  public TransferResult transfer(int amount, String login, String toAccount) {
     var transferDTO = new TransferDTO();
     transferDTO.setFrom(login);
     transferDTO.setTo(toAccount);
+    transferDTO.setAmount(amount);
 
     var accountDTO = getAccount(login);
     String message = null;
     List<String> errors = null;
     try {
       transferServiceApi.transferMoney(transferDTO);
-      message = "Успешно переведено %d руб клиенту %s".formatted(value, accountDTO.getFullname());
+      message = "Успешно переведено %d руб клиенту %s".formatted(amount, accountDTO.getFullname());
     } catch (RuntimeException e) {
       errors = List.of("Недостаточно средств на счету");
     }

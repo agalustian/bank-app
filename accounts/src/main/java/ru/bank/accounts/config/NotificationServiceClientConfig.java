@@ -1,5 +1,6 @@
 package ru.bank.accounts.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
@@ -9,18 +10,15 @@ import ru.bank.accounts.notifications.client.api.NotificationsServiceApi;
 @Configuration
 public class NotificationServiceClientConfig {
 
+  @Value("${services.notifications.url}")
+  private String notificationsURL;
+
   @Bean
-  ApiClient apiClient(RestTemplate restTemplate) {
+  NotificationsServiceApi notificationsControllerApi(RestTemplate restTemplate) {
     var client = new ApiClient(restTemplate);
-    // TODO use from env
-    client.setBasePath("http://localhost:8082");
+    client.setBasePath(notificationsURL);
 
-    return client;
-  }
-
-  @Bean
-  NotificationsServiceApi notificationsControllerApi(ApiClient apiClient) {
-    return new NotificationsServiceApi();
+    return new NotificationsServiceApi(client);
   }
 
 }

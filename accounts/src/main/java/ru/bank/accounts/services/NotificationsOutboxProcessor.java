@@ -50,7 +50,7 @@ public class NotificationsOutboxProcessor {
       }
     }
 
-    logger.info("Successfully sent ids: {}", processedIds);
+    logger.debug("Successfully sent ids: {}", processedIds);
 
     notificationsOutboxJpaRepository.deleteAllByIdInBatch(processedIds);
   }

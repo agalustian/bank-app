@@ -37,6 +37,8 @@ public class DepositOutbox {
     this.amount = amount;
   }
 
+  public DepositOutbox() {}
+
   public Long getId() {
     return id;
   }

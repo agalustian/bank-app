@@ -4,3 +4,8 @@ server:
 spring:
   application:
     name: front
+  main:
+    banner-mode: off
+
+gateway:
+  path: $GATEWAY_PATH}

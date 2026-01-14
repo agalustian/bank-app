@@ -11,8 +11,8 @@ import ru.bank.front.transfer.client.api.TransferServiceApi;
 @Configuration
 public class ServiceClientsConfig {
 
-//  @Value("${GATEWAY_PATH}")
-  private String GATEWAY_PATH = "http://localhost:8079/api";
+  @Value("${GATEWAY_PATH}")
+  private String GATEWAY_PATH;
 
   @Bean
   AccountsServiceApi accountsServiceApi(RestTemplate restTemplate) {

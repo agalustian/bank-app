@@ -60,9 +60,9 @@ public class MainController {
       @RequestParam("action") CashAction action
   ) {
     var login = "test";
-    var accountDTO = accountService.editCash(login, amount, action);
+    var editCashResult = accountService.editCash(login, amount, action);
 
-    fillModel(login, accountDTO, model, null, null);
+    fillModel(login, editCashResult.accountDTO(), model, editCashResult.errors(), editCashResult.message());
 
     return "main";
   }

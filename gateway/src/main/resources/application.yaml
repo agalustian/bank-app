@@ -3,3 +3,13 @@ server:
 spring:
   application:
     name: application-gateway
+  main:
+    banner-mode: off
+
+services:
+  accounts:
+    url: ${ACCOUNTS_URL}
+  cash:
+    url: ${CASH_URL}
+  transfer:
+    url: ${TRANSFER_URL}

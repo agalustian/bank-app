@@ -16,3 +16,7 @@ spring:
 #  sql:
 #    init:
 #      mode: always
+
+services:
+  notifications:
+    url: ${NOTIFICATIONS_URL}
