@@ -1,4 +1,4 @@
-package transfer.unit.services;
+package ru.bank.transfer.unit.services;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;

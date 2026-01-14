@@ -24,7 +24,7 @@ import ru.bank.accounts.dto.AccountShortInfoDTO;
 import ru.bank.accounts.services.AccountsService;
 
 @WebMvcTest(AccountsController.class)
-class NotificationsControllerTests {
+class AccountsControllerTests {
 
   @Autowired
   private MockMvc mockMvc;
