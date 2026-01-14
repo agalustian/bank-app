@@ -1,134 +1,99 @@
 package ru.bank.front.controller;
 
+import jakarta.annotation.Nullable;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import ru.bank.front.controller.dto.CashAction;
-import ru.bank.front.controller.stub.AccountStub;
+import ru.bank.front.accounts.domain.AccountDTO;
 
-import java.time.LocalDate;
+import ru.bank.front.dto.CashAction;
+import ru.bank.front.services.AccountService;
 
-/**
- * Контроллер main.html.
- *
- * Используемая модель для main.html:
- *      model.addAttribute("name", name);
- *      model.addAttribute("birthdate", birthdate.format(DateTimeFormatter.ISO_DATE));
- *      model.addAttribute("sum", sum);
- *      model.addAttribute("accounts", accounts);
- *      model.addAttribute("errors", errors);
- *      model.addAttribute("info", info);
- *
- * Поля модели:
- *      name - Фамилия Имя текущего пользователя, String (обязательное)
- *      birthdate - дата рождения текущего пользователя, String в формате 'YYYY-MM-DD' (обязательное)
- *      sum - сумма на счету текущего пользователя, Integer (обязательное)
- *      accounts - список аккаунтов, которым можно перевести деньги, List<AccountDto> (обязательное)
- *      errors - список ошибок после выполнения действий, List<String> (не обязательное)
- *      info - строка успешности после выполнения действия, String (не обязательное)
- *
- * С примерами использования можно ознакомиться в тестовом классе заглушке AccountStub
- */
 @Controller
 public class MainController {
-    // TODO: Удалить заглушку, так как используется только для ознакомительных целей
-    @Autowired
-    private AccountStub accountStub;
+  @Autowired
+  private AccountService accountService;
 
-    /**
-     * GET /.
-     * Редирект на GET /account
-     */
-    @GetMapping
-    public String index() {
-        return "redirect:/account";
-    }
+  @GetMapping
+  public String index() {
+    return "redirect:/account";
+  }
 
-    /**
-     * GET /account.
-     * Что нужно сделать:
-     * 1. Сходить в сервис accounts через Gateway API для получения данных аккаунта по REST
-     * 2. Заполнить модель main.html полученными из ответа данными
-     * 3. Текущего пользователя можно получить из контекста Security
-     */
-    @GetMapping("/account")
-    public String getAccount(Model model) {
-        // TODO: Заменить на то, что описано в комментарии к методу
-        accountStub.fillModel(model, null, null);
+  @GetMapping("/account")
+  public String getAccount(Model model) {
+    // TODO: Заменить на то, что описано в комментарии к методу
+    var login = "test";
 
-        return "main";
-    }
+    var accountDTO = accountService.getAccount(login);
 
-    /**
-     * POST /account.
-     * Что нужно сделать:
-     * 1. Сходить в сервис accounts через Gateway API для изменения данных текущего пользователя по REST
-     * 2. Заполнить модель main.html полученными из ответа данными
-     * 3. Текущего пользователя можно получить из контекста Security
-     *
-     * Изменяемые данные:
-     * 1. name - Фамилия Имя
-     * 2. birthdate - дата рождения в формате YYYY-DD-MM
-     */
-    @PostMapping("/account")
-    public String editAccount(
-            Model model,
-            @RequestParam("name") String name,
-            @RequestParam("birthdate") LocalDate birthdate
-    ) {
-        // TODO: Заменить на то, что описано в комментарии к методу
-        accountStub.setNameAndBirthdate(name, birthdate);
-        accountStub.fillModel(model, null, null);
+    fillModel(login, accountDTO, model, null, null);
 
-        return "main";
-    }
+    return "main";
+  }
 
-    /**
-     * POST /cash.
-     * Что нужно сделать:
-     * 1. Сходить в сервис cash через Gateway API для снятия/пополнения счета текущего аккаунта по REST
-     * 2. Заполнить модель main.html полученными из ответа данными
-     * 3. Текущего пользователя можно получить из контекста Security
-     *
-     * Параметры:
-     * 1. value - сумма списания
-     * 2. action - GET (снять), PUT (пополнить)
-     */
-    @PostMapping("/cash")
-    public String editCash(
-            Model model,
-            @RequestParam("value") int value,
-            @RequestParam("action") CashAction action
-            ) {
-        // TODO: Заменить на то, что описано в комментарии к методу
-        accountStub.editCash(model, value, action);
+  @PostMapping("/account")
+  public String editAccount(
+      Model model,
+      @RequestParam("fullname") String fullname,
+      @RequestParam("birthdate") LocalDate birthdate
+  ) {
+    var login = "test";
+    var updatedAccount =
+        accountService.updateAccount(login, fullname, birthdate.format(DateTimeFormatter.ISO_LOCAL_DATE));
 
-        return "main";
-    }
+    fillModel(login, updatedAccount, model, null, null);
 
-    /**
-     * POST /transfer.
-     * Что нужно сделать:
-     * 1. Сходить в сервис accounts через Gateway API для перевода со счета текущего аккаунта на счет другого аккаунта по REST
-     * 2. Заполнить модель main.html полученными из ответа данными
-     * 3. Текущего пользователя можно получить из контекста Security
-     *
-     * Параметры:
-     * 1. value - сумма списания
-     * 2. login - логин пользователя получателя
-     */
-    @PostMapping("/transfer")
-    public String transfer(
-            Model model,
-            @RequestParam("value") int value,
-            @RequestParam("login") String login
-    ) {
-        // TODO: Заменить на то, что описано в комментарии к методу
-        accountStub.transfer(model, value, login);
+    return "main";
+  }
 
-        return "main";
-    }
+  @PostMapping("/cash")
+  public String editCash(
+      Model model,
+      @RequestParam("amount") int amount,
+      @RequestParam("action") CashAction action
+  ) {
+    var login = "test";
+    var accountDTO = accountService.editCash(login, amount, action);
+
+    fillModel(login, accountDTO, model, null, null);
+
+    return "main";
+  }
+
+  @PostMapping("/transfer")
+  public String transfer(
+      Model model,
+      @RequestParam("value") int value,
+      @RequestParam("toAccount") String toAccount
+  ) {
+    var login = "test";
+
+    var transferResult = accountService.transfer(value, login, toAccount);
+
+    fillModel(login, transferResult.accountDTO(), model, transferResult.errors(), transferResult.message());
+
+    return "main";
+  }
+
+  public void fillModel(String login, AccountDTO accountDTO, Model model,
+                        @Nullable List<String> errors, @Nullable String info) {
+
+    var accountsShortInfo = accountService.listAccountsShortInfo().stream()
+        .filter(accountShortInfoDTO -> !Objects.equals(accountShortInfoDTO.getLogin(), login)
+        ).toList();
+
+    model.addAttribute("fullname", accountDTO.getFullname());
+    model.addAttribute("birthdate", accountDTO.getBirthdate());
+    model.addAttribute("sum", accountDTO.getAmount());
+    model.addAttribute("accounts", accountsShortInfo);
+    model.addAttribute("errors", errors);
+    model.addAttribute("info", info);
+  }
 }

@@ -22,7 +22,7 @@ public class AccountsController {
 
   @GetMapping("")
   ResponseEntity<AccountDTO> getAccount() {
-    var login = "stub";
+    var login = "test";
 
     return ResponseEntity.ok(accountsService.getAccountByLogin(login));
   }
@@ -34,7 +34,7 @@ public class AccountsController {
 
   @PutMapping()
   ResponseEntity<AccountDTO> updateAccount(@RequestBody @Validated AccountDTO accountDTO) {
-    var login = "stub";
+    var login = "test";
 
     return ResponseEntity.ok(accountsService.updateAccountByLogin(login, accountDTO));
   }

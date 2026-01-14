@@ -13,7 +13,7 @@ public class AccountsServiceClientConfig {
   AccountsServiceApi accountsServiceApi(RestTemplate restTemplate) {
     var client = new ApiClient(restTemplate);
     // TODO use from env
-    client.setBasePath("http://localhost:8083");
+    client.setBasePath("http://localhost:8084");
 
     return new AccountsServiceApi(client);
   }

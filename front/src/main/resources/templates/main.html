@@ -33,10 +33,10 @@
                         <form method="post" action="/account">
                             <div class="form-group">
                                 <h6>
-                                    <label for="name">Фамилия Имя</label>
+                                    <label for="fullname">Фамилия Имя</label>
                                 </h6>
                                 <p>
-                                    <input type="text" class="form-control" id="name" name="name" placeholder="Иванов Иван" th:value="${name}" required>
+                                    <input type="text" class="form-control" id="fullname" name="fullname" placeholder="Иванов Иван" th:value="${fullname}" required>
                                 </p>
                             </div>
                             <div class="form-group">
@@ -49,7 +49,7 @@
                             </div>
                             <div class="form-group">
                                 <h6>Сумма на счету, руб</h6>
-                                <p th:text="${sum}"/>
+                                <p th:text="${amount}"/>
                             </div>
                             <button type="submit" class="btn btn-secondary">Сохранить изменения</button>
                         </form>
@@ -93,17 +93,17 @@
                                     <label for="to_account">Кому</label>
                                 </h6>
                                 <p>
-                                    <select class="form-select" id="to_account" name="login" required>
-                                        <option th:each="account : ${accounts}" th:value="${account.login}" th:text="${account.name}"/>
+                                    <select class="form-select" id="to_account" name="toAccount" required>
+                                        <option th:each="account : ${accounts}" th:value="${account.login}" th:text="${account.fullname}"/>
                                     </select>
                                 </p>
                             </div>
                             <div class="form-group">
                                 <h6>
-                                    <label for="transfer_value">Сумма, руб.</label>
+                                    <label for="amount">Сумма, руб.</label>
                                 </h6>
                                 <p>
-                                    <input type="text" class="form-control" name="value" id="transfer_value" placeholder="100" required>
+                                    <input type="text" class="form-control" name="value" id="amount" placeholder="100" required>
                                 </p>
                             </div>
                             <button type="submit" class="btn btn-secondary">Перевести</button>

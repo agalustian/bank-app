@@ -1,4 +1,4 @@
-package ru.bank.front.controller.dto;
+package ru.bank.front.dto;
 
 public enum CashAction {
     PUT, GET
