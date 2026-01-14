@@ -1,4 +1,4 @@
-package ru.bank.cash.unit.services;
+package transfer.unit.services;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
@@ -15,7 +15,7 @@ import ru.bank.cash.repositories.NotificationsOutboxJpaRepository;
 import ru.bank.cash.services.AccountsService;
 import ru.bank.cash.services.CashService;
 
-class CashServiceTests {
+class TransferServiceTests {
 
   private final AccountsService accountsService = Mockito.mock(AccountsService.class);
   private final NotificationsOutboxJpaRepository notificationsOutboxJpaRepository =
