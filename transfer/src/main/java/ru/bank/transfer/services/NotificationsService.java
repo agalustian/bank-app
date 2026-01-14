@@ -1,8 +1,8 @@
 package ru.bank.transfer.services;
 
 import org.springframework.stereotype.Service;
-import ru.bank.cash.notifications.client.api.NotificationsServiceApi;
-import ru.bank.cash.notifications.domain.NotificationDTO;
+import ru.bank.transfer.notifications.client.api.NotificationsServiceApi;
+import ru.bank.transfer.notifications.domain.NotificationDTO;
 
 @Service
 public class NotificationsService {

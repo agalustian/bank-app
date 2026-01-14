@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import ru.bank.cash.accounts.domain.AccountDTO;
+import ru.bank.transfer.accounts.domain.AccountDTO;
 import ru.bank.transfer.dto.TransferDTO;
 import ru.bank.transfer.models.DepositOutbox;
 import ru.bank.transfer.models.NotificationOutbox;

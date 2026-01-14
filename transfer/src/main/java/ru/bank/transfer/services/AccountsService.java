@@ -1,8 +1,8 @@
 package ru.bank.transfer.services;
 
 import org.springframework.stereotype.Service;
-import ru.bank.cash.accounts.client.api.AccountsServiceApi;
-import ru.bank.cash.accounts.domain.AccountDTO;
+import ru.bank.transfer.accounts.client.api.AccountsServiceApi;
+import ru.bank.transfer.accounts.domain.AccountDTO;
 
 @Service
 public class AccountsService {
