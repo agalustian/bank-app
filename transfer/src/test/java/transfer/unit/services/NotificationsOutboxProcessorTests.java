@@ -10,10 +10,10 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import ru.bank.cash.models.NotificationOutbox;
-import ru.bank.cash.repositories.NotificationsOutboxJpaRepository;
-import ru.bank.cash.services.NotificationsOutboxProcessor;
-import ru.bank.cash.services.NotificationsService;
+import ru.bank.transfer.models.NotificationOutbox;
+import ru.bank.transfer.repositories.NotificationsOutboxJpaRepository;
+import ru.bank.transfer.services.NotificationsOutboxProcessor;
+import ru.bank.transfer.services.NotificationsService;
 
 class NotificationsOutboxProcessorTests {
 
