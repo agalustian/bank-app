@@ -25,7 +25,7 @@ public class SecurityConfig {
   public SecurityFilterChain accountsSecurityFilterChain(HttpSecurity http) throws Exception {
     http.authorizeHttpRequests(auth -> {
           auth.requestMatchers("/actuator/**").permitAll();
-          auth.anyRequest().hasRole("SERVICE");
+          auth.anyRequest().authenticated();
         }).oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())))
         .csrf(CsrfConfigurer::disable);
 

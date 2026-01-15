@@ -2,6 +2,7 @@ package ru.bank.notifications.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +20,7 @@ public class NotificationsController {
   private NotificationsService notificationsService;
 
   @PostMapping("/send")
+  @PreAuthorize("hasAuthority('service')")
   ResponseEntity<String> sendNotification(@RequestBody @Validated NotificationDTO dto) {
     notificationsService.sendNotification(new Notification(dto.text(), dto.username()));
 
