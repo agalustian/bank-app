@@ -19,17 +19,17 @@ services:
 #    ports:
 #      - "8079:8079"
 
-  cash:
-    image: cash:latest
-    restart: always
-    environment:
-      PG_URL: jdbc:postgresql://postgres:5432/bankdb?schema=cash
-      PG_USERNAME: postgres
-      PG_PASSWORD: mysecretpassword
-      NOTIFICATIONS_URL: "http://notifications:8082"
-      ACCOUNTS_URL: "http://accounts:8084"
-    ports:
-      - "8083:8083"
+#  cash:
+#    image: cash:latest
+#    restart: always
+#    environment:
+#      PG_URL: jdbc:postgresql://postgres:5432/bankdb?schema=cash
+#      PG_USERNAME: postgres
+#      PG_PASSWORD: mysecretpassword
+#      NOTIFICATIONS_URL: "http://notifications:8082"
+#      ACCOUNTS_URL: "http://accounts:8084"
+#    ports:
+#      - "8083:8083"
 
   transfer:
     image: transfer:latest

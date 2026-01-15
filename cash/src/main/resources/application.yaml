@@ -13,9 +13,25 @@ spring:
     driver-class-name: org.postgresql.Driver
   liquibase:
     change-log: "classpath:/db/changelog/db.changelog-master.yaml"
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${KEYCLOAK_URL:http://localhost:8080/realms/bank-app}
+
+      client:
+        registration:
+          cash-service:
+            provider: keycloak
+            client-id: cash-service
+            client-secret: ${CASH_CLIENT_SECRET:jEF2EPnRG5VhLkjL5xKTvuXoa57eqckW}
+            authorization-grant-type: client_credentials
+        provider:
+          keycloak:
+            issuer-uri: ${KEYCLOAK_URL:http://localhost:8080/realms/bank-app}
 
 services:
   notifications:
-    url: ${NOTIFICATIONS_URL}
+    url: ${NOTIFICATIONS_URL:http://localhost:8082}
   accounts:
-    url: ${ACCOUNTS_URL}
+    url: ${ACCOUNTS_URL:http://localhost:8084}

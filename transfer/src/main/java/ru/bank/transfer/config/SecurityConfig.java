@@ -1,4 +1,4 @@
-package ru.bank.accounts.config;
+package ru.bank.transfer.config;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -24,7 +24,7 @@ public class SecurityConfig {
   public SecurityFilterChain transferSecurityFilterChain(HttpSecurity http) throws Exception {
     http.authorizeHttpRequests(auth -> {
       auth.requestMatchers("/actuator/**").permitAll();
-      auth.anyRequest().hasRole("ACCOUNTS");
+      auth.anyRequest().hasRole("CASH");
     });
 
     http.oauth2ResourceServer(oauth2 ->
@@ -75,8 +75,8 @@ public class SecurityConfig {
         .map(role -> (GrantedAuthority) new SimpleGrantedAuthority("ROLE_" + role))
         .collect(Collectors.toList());
 
-    if (roles.contains("ACCOUNTS")) {
-      authorities.add(new SimpleGrantedAuthority("accounts"));
+    if (roles.contains("CASH")) {
+      authorities.add(new SimpleGrantedAuthority("cash"));
     }
 
     return authorities;
