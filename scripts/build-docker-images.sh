@@ -1,5 +1,6 @@
 #!/bin/bash
 
+sh ./gradlew compileJava &&
 sh ./gradlew build &&
 docker build -t front:latest ./front/ &&
 docker build -t gateway:latest ./gateway/ &&

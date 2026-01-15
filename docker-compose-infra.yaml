@@ -23,6 +23,18 @@ services:
     ports:
       - "8080:8080"
 
+  consul-server:
+    image: "hashicorp/consul:latest"
+    ports:
+      - "8500:8500" # HTTP API and UI
+      - "8600:8600/udp" # DNS
+    command: "agent -server -dev -ui -client=0.0.0.0"
+    volumes:
+      - "consul_data:/consul/data"
+
 networks:
   shared-network:
     external: true
+
+volumes:
+  consul_data:

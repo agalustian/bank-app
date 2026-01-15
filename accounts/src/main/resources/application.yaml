@@ -7,7 +7,7 @@ spring:
   main:
     banner-mode: off
   datasource:
-    url: ${PG_URL:jdbc:postgresql://localhost:5432/bankdb?currentSchema=accounts}
+    url: ${PG_URL}
     username: ${PG_USERNAME:postgres}
     password: ${PG_PASSWORD:mysecretpassword}
     driver-class-name: org.postgresql.Driver
@@ -16,6 +16,20 @@ spring:
 #  sql:
 #    init:
 #      mode: always
+  cloud:
+    consul:
+      host: ${CONSUL_URL:localhost}
+      port: ${CONSUL_PORT:8500}
+      discovery:
+        service-name: accounts
+      config:
+        enabled: true
+        format: YAML
+        prefix: config
+        data-key: data
+        defaultContext: application
+  config:
+    import: "optional:consul:"
 
   security:
     oauth2:
@@ -36,8 +50,8 @@ spring:
 
 services:
   notifications:
-    url: ${NOTIFICATIONS_URL:http://localhost:8082}
+    url: ${NOTIFICATIONS_URL:http://notifications:8082}
 
-logging:
-  level:
-    root: DEBUG
+#logging:
+#  level:
+#    root: DEBUG
