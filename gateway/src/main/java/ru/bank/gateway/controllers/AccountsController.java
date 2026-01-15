@@ -27,7 +27,7 @@ public class AccountsController {
     return proxy.sensitive().uri(accountsURL + path).get();
   }
 
-  @PutMapping("/accounts")
+  @PutMapping("/accounts/**")
   public ResponseEntity<?> updateAccount(ProxyExchange<byte[]> proxy) {
     String path = proxy.path("/api");
     return proxy.sensitive().uri(accountsURL + path).put();

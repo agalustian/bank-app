@@ -17,11 +17,11 @@ import ru.bank.front.transfer.domain.TransferDTO;
 @Service
 public class AccountService {
 
-  private AccountsServiceApi accountsServiceApi;
+  private final AccountsServiceApi accountsServiceApi;
 
-  private CashServiceApi cashServiceApi;
+  private final CashServiceApi cashServiceApi;
 
-  private TransferServiceApi transferServiceApi;
+  private final TransferServiceApi transferServiceApi;
 
   public AccountService(AccountsServiceApi accountsServiceApi,
                         CashServiceApi cashServiceApi,
@@ -32,27 +32,27 @@ public class AccountService {
     this.transferServiceApi = transferServiceApi;
   }
 
-  public AccountDTO getAccount(final String login) {
+  public AccountDTO getAccount() {
     return accountsServiceApi.getAccount();
   }
 
   public AccountDTO updateAccount(final String login, final String fullname, final String birthdate) {
-    var accountDTO = getAccount(login);
+    var accountDTO = getAccount();
     accountDTO.setFullname(fullname);
     accountDTO.setBirthdate(birthdate);
 
-    return accountsServiceApi.updateAccount(accountDTO);
+    return accountsServiceApi.updateAccount(login, accountDTO);
   }
 
   public List<AccountShortInfoDTO> listAccountsShortInfo() {
     return accountsServiceApi.listAccountShortInfo();
   }
 
-  public EditCashResult editCash(String login, int amount, CashAction action) {
+  public EditCashResult editCash(int amount, CashAction action) {
     var amountDTO = new EditMoneyDTO();
     amountDTO.setAmount(amount);
 
-    var accountDTO = getAccount(login);
+    var accountDTO = getAccount();
     String message = null;
     List<String> errors = null;
     try {
@@ -71,15 +71,14 @@ public class AccountService {
 
   public TransferResult transfer(int amount, String login, String toAccount) {
     var transferDTO = new TransferDTO();
-    transferDTO.setFrom(login);
     transferDTO.setTo(toAccount);
     transferDTO.setAmount(amount);
 
-    var accountDTO = getAccount(login);
+    var accountDTO = getAccount();
     String message = null;
     List<String> errors = null;
     try {
-      transferServiceApi.transferMoney(transferDTO);
+      transferServiceApi.transferMoney(login, transferDTO);
       message = "Успешно переведено %d руб клиенту %s".formatted(amount, accountDTO.getFullname());
     } catch (RuntimeException e) {
       errors = List.of("Недостаточно средств на счету");

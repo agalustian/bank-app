@@ -15,6 +15,7 @@ import ru.bank.front.accounts.domain.AccountDTO;
 
 import ru.bank.front.dto.CashAction;
 import ru.bank.front.services.AccountService;
+import ru.bank.front.utils.SecurityUtils;
 
 @Controller
 public class MainController {
@@ -28,12 +29,9 @@ public class MainController {
 
   @GetMapping("/account")
   public String getAccount(Model model) {
-    // TODO: Заменить на то, что описано в комментарии к методу
-    var login = "test";
+    var accountDTO = accountService.getAccount();
 
-    var accountDTO = accountService.getAccount(login);
-
-    fillModel(login, accountDTO, model, null, null);
+    fillModel(SecurityUtils.getLogin(), accountDTO, model, null, null);
 
     return "main";
   }
@@ -44,7 +42,7 @@ public class MainController {
       @RequestParam("fullname") String fullname,
       @RequestParam("birthdate") LocalDate birthdate
   ) {
-    var login = "test";
+    var login = SecurityUtils.getLogin();
     var updatedAccount =
         accountService.updateAccount(login, fullname, birthdate.format(DateTimeFormatter.ISO_LOCAL_DATE));
 
@@ -59,10 +57,9 @@ public class MainController {
       @RequestParam("amount") int amount,
       @RequestParam("action") CashAction action
   ) {
-    var login = "test";
-    var editCashResult = accountService.editCash(login, amount, action);
+    var editCashResult = accountService.editCash(amount, action);
 
-    fillModel(login, editCashResult.accountDTO(), model, editCashResult.errors(), editCashResult.message());
+    fillModel(SecurityUtils.getLogin(), editCashResult.accountDTO(), model, editCashResult.errors(), editCashResult.message());
 
     return "main";
   }
@@ -73,8 +70,7 @@ public class MainController {
       @RequestParam("value") int value,
       @RequestParam("toAccount") String toAccount
   ) {
-    var login = "test";
-
+    var login = SecurityUtils.getLogin();
     var transferResult = accountService.transfer(value, login, toAccount);
 
     fillModel(login, transferResult.accountDTO(), model, transferResult.errors(), transferResult.message());
