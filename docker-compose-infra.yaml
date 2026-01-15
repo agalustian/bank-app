@@ -19,6 +19,7 @@ services:
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
       KC_HOSTNAME: localhost
+      KC_LOG_LEVEL: debug
     ports:
       - "8080:8080"
 

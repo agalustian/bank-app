@@ -34,7 +34,7 @@ public class AccountsService {
     accountsServiceApi.updateAccount(accountDTO);
   }
 
-  public AccountDTO getAccount(final String login) {
+  public AccountDTO getAccount() {
     return accountsServiceApi.getAccount();
   }
 

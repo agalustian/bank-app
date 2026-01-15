@@ -24,7 +24,7 @@ spring:
           cash-service:
             provider: keycloak
             client-id: cash-service
-            client-secret: ${CASH_CLIENT_SECRET:jEF2EPnRG5VhLkjL5xKTvuXoa57eqckW}
+            client-secret: ${CASH_CLIENT_SECRET:Dj8JrrzsbMTx7b1kGpvS4O75whP2jkZI}
             authorization-grant-type: client_credentials
         provider:
           keycloak:

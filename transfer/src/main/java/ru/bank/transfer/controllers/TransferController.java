@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.bank.transfer.dto.TransferDTO;
 import ru.bank.transfer.services.TransferService;
+import ru.bank.transfer.utils.SecurityUtils;
 
 @RestController
 @RequestMapping("/v1/transfer")
@@ -19,7 +20,7 @@ public class TransferController {
 
   @PutMapping
   ResponseEntity<String> transferMoney(@RequestBody @Validated TransferDTO transferDTO) {
-    transferService.transfer(transferDTO);
+    transferService.transfer(SecurityUtils.getLogin(), transferDTO);
 
     return ResponseEntity.noContent().build();
   }

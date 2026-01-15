@@ -27,14 +27,14 @@ public class TransferService {
   }
 
   @Transactional
-  public void transfer(TransferDTO transferDTO) {
-    var fromAccount = accountsService.getAccount(transferDTO.from());
+  public void transfer(String login, TransferDTO transferDTO) {
+    var fromAccount = accountsService.getAccount();
 
     accountsService.withdrawal(fromAccount, transferDTO.amount());
     notificationsOutboxJpaRepository.save(
         new NotificationOutbox("Withdrawal money success", fromAccount.getFullname()));
 
-    depositOutboxJpaRepository.save(new DepositOutbox(transferDTO.from(), transferDTO.to(), transferDTO.amount()));
+    depositOutboxJpaRepository.save(new DepositOutbox(login, transferDTO.to(), transferDTO.amount()));
   }
 
 }

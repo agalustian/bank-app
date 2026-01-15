@@ -24,7 +24,7 @@ spring:
           transfer-service:
             provider: keycloak
             client-id: transfer-service
-            client-secret: ${TRANSFER_CLIENT_SECRET:jEF2EPnRG5VhLkjL5xKTvuXoa57eqckW}
+            client-secret: ${TRANSFER_CLIENT_SECRET:AvBOece6UFxzluCvGvSv7aexgSqidri8}
             authorization-grant-type: client_credentials
         provider:
           keycloak:
@@ -32,6 +32,6 @@ spring:
 
 services:
   notifications:
-    url: ${NOTIFICATIONS_URL}
+    url: ${NOTIFICATIONS_URL:http://localhost:8082}
   accounts:
-    url: ${ACCOUNTS_URL}
+    url: ${ACCOUNTS_URL:http://localhost:8084}

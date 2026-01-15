@@ -23,3 +23,7 @@ spring:
 
 gateway:
   path: ${GATEWAY_PATH:http://localhost:8079/api}
+
+#logging:
+#  level:
+#    root: DEBUG
