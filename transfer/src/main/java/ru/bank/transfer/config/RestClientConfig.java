@@ -19,8 +19,8 @@ public class RestClientConfig {
 
   @Bean
   @LoadBalanced
-  public RestClient restClient() {
-    return RestClient.builder().requestInterceptor(clientHttpRequestInterceptor()).build();
+  public RestClient restClient(RestClient.Builder restClientBuilder) {
+    return restClientBuilder.requestInterceptor(clientHttpRequestInterceptor()).build();
   }
 
   private ClientHttpRequestInterceptor clientHttpRequestInterceptor() {

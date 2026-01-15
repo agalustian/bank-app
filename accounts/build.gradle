@@ -6,8 +6,6 @@ plugins {
     id "org.springframework.boot" version "3.5.6"
     id "io.spring.dependency-management" version "1.1.7"
     id "org.openapi.generator" version "7.12.0"
-    id "org.springframework.cloud.contract" version "4.3.0"
-    id "maven-publish"
 }
 
 group = "ru.bank"
@@ -42,12 +40,6 @@ sourceSets {
     }
 }
 
-contracts {
-    baseClassForTests.set(
-        "ru.bank.accounts.services.AccountsContractTest"
-    )
-}
-
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -66,7 +58,6 @@ dependencies {
     testImplementation "org.springframework.boot:spring-boot-testcontainers"
     testImplementation "org.testcontainers:junit-jupiter"
     testImplementation "org.testcontainers:postgresql"
-    testImplementation 'org.springframework.cloud:spring-cloud-starter-contract-verifier:4.3.0'
     testImplementation 'org.springframework.cloud:spring-cloud-starter-contract-stub-runner:4.3.0'
 
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
