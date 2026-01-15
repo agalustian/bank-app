@@ -78,7 +78,7 @@ tasks.register("buildNotificationsClient", GenerateTask) {
     packageName.set("Notifications")
     configOptions.set([
             hideGenerationTimestamp: "true",
-            library                : "resttemplate",
+            library                : "restclient",
             useJakartaEe           : "true",
             useTags                : "true",
             openApiNullable        : "false",
@@ -96,7 +96,7 @@ tasks.register("buildAccountsClient", GenerateTask) {
     packageName.set("Accounts")
     configOptions.set([
             hideGenerationTimestamp: "true",
-            library                : "resttemplate",
+            library                : "restclient",
             useJakartaEe           : "true",
             useTags                : "true",
             openApiNullable        : "false",

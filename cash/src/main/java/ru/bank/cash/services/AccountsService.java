@@ -20,8 +20,7 @@ public class AccountsService {
     accountDTO.setBirthdate(account.getBirthdate());
     accountDTO.setAmount(account.getAmount() + amount);
 
-    accountsServiceApi.updateAccount(accountDTO);
-
+    accountsServiceApi.updateAccount(account.getLogin(), accountDTO);
   }
 
   public void withdrawal(final AccountDTO account, final Integer amount) {
@@ -31,7 +30,7 @@ public class AccountsService {
     accountDTO.setBirthdate(account.getBirthdate());
     accountDTO.setAmount(account.getAmount() - amount);
 
-    accountsServiceApi.updateAccount(accountDTO);
+    accountsServiceApi.updateAccount(account.getLogin(), accountDTO);
   }
 
   public AccountDTO getAccount() {
