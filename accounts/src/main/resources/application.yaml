@@ -7,9 +7,9 @@ spring:
   main:
     banner-mode: off
   datasource:
-    url: ${PG_URL}
-    username: ${PG_USERNAME}
-    password: ${PG_PASSWORD}
+    url: ${PG_URL:jdbc:postgresql://localhost:5432/bankdb?currentSchema=accounts}
+    username: ${PG_USERNAME:postgres}
+    password: ${PG_PASSWORD:mysecretpassword}
     driver-class-name: org.postgresql.Driver
   liquibase:
     change-log: "classpath:/db/changelog/db.changelog-master.yaml"

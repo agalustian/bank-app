@@ -3,7 +3,7 @@ package ru.bank.accounts.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.client.RestClient;
 import ru.bank.accounts.notifications.client.ApiClient;
 import ru.bank.accounts.notifications.client.api.NotificationsServiceApi;
 
@@ -14,8 +14,8 @@ public class NotificationServiceClientConfig {
   private String notificationsURL;
 
   @Bean
-  NotificationsServiceApi notificationsControllerApi(RestTemplate restTemplate) {
-    var client = new ApiClient(restTemplate);
+  NotificationsServiceApi notificationsControllerApi(RestClient restClient) {
+    var client = new ApiClient(restClient);
     client.setBasePath(notificationsURL);
 
     return new NotificationsServiceApi(client);

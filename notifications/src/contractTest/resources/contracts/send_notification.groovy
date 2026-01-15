@@ -14,12 +14,9 @@ Contract.make {
                     consumer(regex('Bearer\\s+.+')),
                     producer('Bearer test-token')
             )
-            header "Content-type", value(producer("Application/json"))
+            header "Content-type", value(producer("application/json"))
         }
-        body(
-            text: "test text",
-            username: "test username"
-        )
+        body("""{"text":"test text","username":"test username"}""")
     }
 
     response {

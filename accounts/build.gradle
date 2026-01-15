@@ -34,7 +34,7 @@ sourceSets {
 
 contracts {
     baseClassForTests.set(
-        "ru.bank.accounts.contract.AccountsContractTest"
+        "ru.bank.accounts.services.AccountsContractTest"
     )
 }
 
@@ -54,6 +54,7 @@ dependencies {
     testImplementation "org.testcontainers:junit-jupiter"
     testImplementation "org.testcontainers:postgresql"
     testImplementation 'org.springframework.cloud:spring-cloud-starter-contract-verifier:4.3.0'
+    testImplementation 'org.springframework.cloud:spring-cloud-starter-contract-stub-runner:4.3.0'
 
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
@@ -90,7 +91,7 @@ tasks.register("buildNotificationsClient", GenerateTask) {
     packageName.set("Notifications")
     configOptions.set([
             hideGenerationTimestamp: "true",
-            library                : "resttemplate",
+            library                : "restclient",
             useJakartaEe           : "true",
             useTags                : "true",
             openApiNullable        : "false",

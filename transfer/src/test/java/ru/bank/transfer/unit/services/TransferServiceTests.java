@@ -45,10 +45,8 @@ class TransferServiceTests {
   @Test
   void shouldTransferMoney() {
     var fromAccountDTO = generateAccountDTO();
-    var toAccountDTO = generateAccountDTO();
 
     Mockito.when(accountsService.getAccount()).thenReturn(fromAccountDTO);
-    Mockito.when(accountsService.getAccount()).thenReturn(toAccountDTO);
 
     transferService.transfer("from", new TransferDTO("to", 1000));
 

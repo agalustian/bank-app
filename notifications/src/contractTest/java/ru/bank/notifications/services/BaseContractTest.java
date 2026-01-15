@@ -23,6 +23,6 @@ public abstract class BaseContractTest {
   @BeforeEach
   void setup() {
     RestAssuredMockMvc.mockMvc(mockMvc);
-  }
 
+  }
 }
