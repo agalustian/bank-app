@@ -11,12 +11,22 @@
     }
   ],
   "paths": {
-    "/v1/transfer": {
+    "/v1/transfer/{login}": {
       "put": {
         "tags": [
           "transfer-service"
         ],
         "operationId": "transferMoney",
+        "parameters": [
+          {
+            "name": "login",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -47,9 +57,6 @@
       "TransferDTO": {
         "type": "object",
         "properties": {
-          "from": {
-            "type": "string"
-          },
           "to": {
             "type": "string"
           },
