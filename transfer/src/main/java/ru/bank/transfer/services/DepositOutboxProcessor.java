@@ -49,7 +49,7 @@ public class DepositOutboxProcessor {
     List<Long> processedIds = new ArrayList<>();
     for (DepositOutbox outboxDeposit : outboxDeposits) {
       try {
-        var account = accountsService.getAccount(outboxDeposit.getTo());
+        var account = accountsService.getAccountByLogin(outboxDeposit.getTo());
 
         accountsService.deposit(account, outboxDeposit.getAmount());
         notificationsOutboxJpaRepository.save(new NotificationOutbox("Deposit money success", account.getFullname()));

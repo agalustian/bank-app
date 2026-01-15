@@ -8,17 +8,17 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "notifications_outbox")
+@Table(name = "deposit_outbox")
 public class DepositOutbox {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(name = "from")
+  @Column(name = "from_account")
   private String from;
 
-  @Column(name = "to")
+  @Column(name = "to_account")
   private String to;
 
   @Column(name = "amount")

@@ -23,7 +23,7 @@ services:
 #    image: cash:latest
 #    restart: always
 #    environment:
-#      PG_URL: jdbc:postgresql://postgres:5432/bankdb?schema=cash
+#      PG_URL: jdbc:postgresql://postgres:5432/bankdb?currentSchema=cash
 #      PG_USERNAME: postgres
 #      PG_PASSWORD: mysecretpassword
 #      NOTIFICATIONS_URL: "http://notifications:8082"
@@ -35,7 +35,7 @@ services:
     image: transfer:latest
     restart: always
     environment:
-      PG_URL: jdbc:postgresql://postgres:5432/bankdb?schema=transfer
+      PG_URL: jdbc:postgresql://postgres:5432/bankdb?currentSchema=transfer
       PG_USERNAME: postgres
       PG_PASSWORD: mysecretpassword
       NOTIFICATIONS_URL: "http://notifications:8082"
@@ -47,7 +47,7 @@ services:
 #    image: accounts:latest
 #    restart: always
 #    environment:
-#      PG_URL: jdbc:postgresql://postgres:5432/bankdb?schema=accounts
+#      PG_URL: jdbc:postgresql://postgres:5432/bankdb?currentSchema=accounts
 #      PG_USERNAME: postgres
 #      PG_PASSWORD: mysecretpassword
 #      NOTIFICATIONS_URL: "http://notifications:8082"

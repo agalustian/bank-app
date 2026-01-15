@@ -19,18 +19,14 @@ public class CashController {
 
   @PutMapping("/deposit")
   ResponseEntity<String> depositMoney(@RequestBody @Validated EditMoneyDTO editMoneyDTO) {
-    var login = "stub";
-
-    cashService.depositMoney(login, editMoneyDTO.amount());
+    cashService.depositMoney(editMoneyDTO.amount());
 
     return ResponseEntity.noContent().build();
   }
 
   @PutMapping("/withdrawal")
   ResponseEntity<String> withdrawalMoney(@RequestBody @Validated EditMoneyDTO editMoneyDTO) {
-    var login = "stub";
-
-    cashService.withdrawalMoney(login, editMoneyDTO.amount());
+    cashService.withdrawalMoney(editMoneyDTO.amount());
 
     return ResponseEntity.noContent().build();
   }

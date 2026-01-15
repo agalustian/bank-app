@@ -23,7 +23,7 @@ public class SecurityConfig {
   @Bean
   public SecurityFilterChain transferSecurityFilterChain(HttpSecurity http) throws Exception {
     http.authorizeHttpRequests(auth -> {
-      auth.requestMatchers("/actuator/**").permitAll();
+      auth.requestMatchers("/actuator/**", "/v3/api-docs", "/swagger-ui/index.html").permitAll();
       auth.anyRequest().hasRole("ACCOUNTS");
     });
 

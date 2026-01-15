@@ -6,7 +6,7 @@
   },
   "servers": [
     {
-      "url": "http://localhost:8082",
+      "url": "http://localhost:8084",
       "description": "Generated server url"
     }
   ],
@@ -91,6 +91,9 @@
           "id": {
             "type": "string",
             "format": "uuid"
+          },
+          "login": {
+            "type": "string"
           },
           "fullname": {
             "type": "string"

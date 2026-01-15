@@ -17,8 +17,8 @@ public class CashService {
     this.accountsService = accountsService;
   }
 
-  public void depositMoney(final String login, final Integer amount) {
-    var account = accountsService.getAccount(login);
+  public void depositMoney(final Integer amount) {
+    var account = accountsService.getAccount();
 
     accountsService.deposit(account, amount);
     notificationsOutboxJpaRepository.save(
@@ -26,8 +26,8 @@ public class CashService {
             account.getFullname()));
   }
 
-  public void withdrawalMoney(final String login, final Integer amount) {
-    var account = accountsService.getAccount(login);
+  public void withdrawalMoney(final Integer amount) {
+    var account = accountsService.getAccount();
 
     accountsService.withdrawal(account, amount);
     notificationsOutboxJpaRepository.save(

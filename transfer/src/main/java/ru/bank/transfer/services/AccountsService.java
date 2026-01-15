@@ -38,4 +38,8 @@ public class AccountsService {
     return accountsServiceApi.getAccount();
   }
 
+  public AccountDTO getAccountByLogin(final String login) {
+    return accountsServiceApi.getAccountByLogin(login);
+  }
+
 }
