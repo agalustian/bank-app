@@ -1,4 +1,6 @@
 package ru.bank.cash.dto;
 
-public record EditMoneyDTO(Integer amount) {
+import jakarta.validation.constraints.Positive;
+
+public record EditMoneyDTO(@Positive Integer amount) {
 }
