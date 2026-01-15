@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import ru.bank.transfer.accounts.client.api.AccountsServiceApi;
 import ru.bank.transfer.models.DepositOutbox;
 import ru.bank.transfer.models.NotificationOutbox;
 import ru.bank.transfer.repositories.DepositOutboxJpaRepository;
@@ -24,16 +25,16 @@ public class DepositOutboxProcessor {
 
   private final NotificationsOutboxJpaRepository notificationsOutboxJpaRepository;
 
-  private final AccountsService accountsService;
+  private final ServiceAccountService serviceAccountService;
 
   private final Logger logger = LoggerFactory.getLogger(DepositOutboxProcessor.class);
 
   public DepositOutboxProcessor(DepositOutboxJpaRepository depositOutboxJpaRepository,
                                 NotificationsOutboxJpaRepository notificationsOutboxJpaRepository,
-                                AccountsService accountsService) {
+                                ServiceAccountService serviceAccountService) {
     this.depositOutboxJpaRepository = depositOutboxJpaRepository;
     this.notificationsOutboxJpaRepository = notificationsOutboxJpaRepository;
-    this.accountsService = accountsService;
+    this.serviceAccountService = serviceAccountService;
   }
 
   @Scheduled(fixedDelayString = "PT1s")
@@ -49,9 +50,9 @@ public class DepositOutboxProcessor {
     List<Long> processedIds = new ArrayList<>();
     for (DepositOutbox outboxDeposit : outboxDeposits) {
       try {
-        var account = accountsService.getAccountByLogin(outboxDeposit.getTo());
+        var account = serviceAccountService.getAccountByLogin(outboxDeposit.getTo());
 
-        accountsService.deposit(account, outboxDeposit.getAmount());
+        serviceAccountService.deposit(account, outboxDeposit.getAmount());
         notificationsOutboxJpaRepository.save(new NotificationOutbox("Deposit money success", account.getFullname()));
         processedIds.add(outboxDeposit.getId());
       } catch (RuntimeException e) {

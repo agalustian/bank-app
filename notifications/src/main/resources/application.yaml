@@ -6,9 +6,8 @@ spring:
     name: notifications
   main:
     banner-mode: off
-  spring:
-    security:
-      oauth2:
-        resourceserver:
-          jwt:
-            issuer-uri: ${KEYCLOAK_URL:http://localhost:8080/realms/bank-app}
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${KEYCLOAK_URL:http://localhost:8080/realms/bank-app}

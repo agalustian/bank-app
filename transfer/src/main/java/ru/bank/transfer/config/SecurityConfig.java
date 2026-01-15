@@ -54,7 +54,6 @@ public class SecurityConfig {
   }
 
   private Collection<GrantedAuthority> extractAuthoritiesFromRealmAccess(Jwt jwt) {
-
     Map<String, Object> realmAccess = jwt.getClaim("realm_access");
     if (realmAccess == null) {
       return Collections.emptyList();

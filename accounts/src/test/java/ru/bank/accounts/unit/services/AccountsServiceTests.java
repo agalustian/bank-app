@@ -88,7 +88,7 @@ class AccountsServiceTests {
     @Test
     void shouldUpdateAccount() {
       var account = generateAccount();
-      var updatePayload = new AccountDTO(account.getId(), account.getFullname(), account.getBirthdate().format(
+      var updatePayload = new AccountDTO(account.getId(), account.getLogin(), account.getFullname(), account.getBirthdate().format(
           DateTimeFormatter.ISO_LOCAL_DATE), 1);
 
       Mockito.when(accountsJpaRepository.findAccountByLogin("test")).thenReturn(Optional.of(account));
@@ -107,7 +107,7 @@ class AccountsServiceTests {
     @Test
     void shouldSaveToOutbox() {
       var account = generateAccount();
-      var updatePayload = new AccountDTO(account.getId(), account.getFullname(), account.getBirthdate().format(
+      var updatePayload = new AccountDTO(account.getId(), account.getLogin(), account.getFullname(), account.getBirthdate().format(
           DateTimeFormatter.ISO_LOCAL_DATE), 1);
 
       Mockito.when(accountsJpaRepository.findAccountByLogin("test")).thenReturn(Optional.of(account));
@@ -130,7 +130,7 @@ class AccountsServiceTests {
     @Test
     void shouldThrowAnConflictError() {
       var account = new Account(UUID.randomUUID(), "test", "fullname", LocalDate.now(), 1000);
-      var dto = new AccountDTO(UUID.randomUUID(), "fullname", "1982-10-11", 1000);
+      var dto = new AccountDTO(UUID.randomUUID(),  "test", "fullname", "1982-10-11", 1000);
 
       Mockito.when(accountsJpaRepository.findAccountByLogin("test")).thenReturn(Optional.of(account));
 

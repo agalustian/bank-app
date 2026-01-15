@@ -53,7 +53,7 @@ class AccountsControllerTests {
 
   @Test
   void shouldGetAccount() throws Exception {
-    var accountDTO = new AccountDTO(UUID.randomUUID(), "fullname", "1988-10-23", 10);
+    var accountDTO = new AccountDTO(UUID.randomUUID(),  "test", "fullname", "1988-10-23", 10);
 
     when(accountsService.getAccountByLogin("stub")).thenReturn(accountDTO);
 
@@ -81,7 +81,7 @@ class AccountsControllerTests {
 
   @Test
   void shouldUpdateAccount() throws Exception {
-    var accountDTO = new AccountDTO(UUID.randomUUID(), "fullname", "1988-10-23", 10);
+    var accountDTO = new AccountDTO(UUID.randomUUID(), "test",  "fullname", "1988-10-23", 10);
 
     when(accountsService.updateAccountByLogin("stub", accountDTO)).thenReturn(accountDTO);
 

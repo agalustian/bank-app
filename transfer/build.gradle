@@ -34,7 +34,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.13'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation "org.springframework.boot:spring-boot-starter-oauth2-resource-server"
+    implementation "org.springframework.boot:spring-boot-starter-oauth2-client"
     implementation 'org.liquibase:liquibase-core:4.25.1'
 
     runtimeOnly 'org.postgresql:postgresql'
@@ -76,7 +78,7 @@ tasks.register("buildNotificationsClient", GenerateTask) {
     packageName.set("Notifications")
     configOptions.set([
             hideGenerationTimestamp: "true",
-            library                : "resttemplate",
+            library                : "restclient",
             useJakartaEe           : "true",
             useTags                : "true",
             openApiNullable        : "false",
@@ -94,7 +96,7 @@ tasks.register("buildAccountsClient", GenerateTask) {
     packageName.set("Accounts")
     configOptions.set([
             hideGenerationTimestamp: "true",
-            library                : "resttemplate",
+            library                : "restclient",
             useJakartaEe           : "true",
             useTags                : "true",
             openApiNullable        : "false",

@@ -13,17 +13,6 @@ public class AccountsService {
     this.accountsServiceApi = accountsServiceApi;
   }
 
-  public void deposit(final AccountDTO account, final Integer amount) {
-    var accountDTO = new AccountDTO();
-    accountDTO.setId(account.getId());
-    accountDTO.setFullname(account.getFullname());
-    accountDTO.setBirthdate(account.getBirthdate());
-    accountDTO.setAmount(account.getAmount() + amount);
-
-    accountsServiceApi.updateAccount(accountDTO);
-
-  }
-
   public void withdrawal(final AccountDTO account, final Integer amount) {
     var accountDTO = new AccountDTO();
     accountDTO.setId(account.getId());
@@ -31,15 +20,11 @@ public class AccountsService {
     accountDTO.setBirthdate(account.getBirthdate());
     accountDTO.setAmount(account.getAmount() - amount);
 
-    accountsServiceApi.updateAccount(accountDTO);
+    accountsServiceApi.updateAccount(account.getLogin(), accountDTO);
   }
 
   public AccountDTO getAccount() {
     return accountsServiceApi.getAccount();
-  }
-
-  public AccountDTO getAccountByLogin(final String login) {
-    return accountsServiceApi.getAccountByLogin(login);
   }
 
 }

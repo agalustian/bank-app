@@ -37,9 +37,9 @@ class TransferControllerTests {
 
   @Test
   void shouldTransferMoney() throws Exception {
-    var transferDTO = new TransferDTO("from", "to", 100);
+    var transferDTO = new TransferDTO( "to", 100);
 
-    mockMvc.perform(put("/v1/transfer").content(toJSON(transferDTO)).contentType(MediaType.APPLICATION_JSON))
+    mockMvc.perform(put("/v1/transfer/from").content(toJSON(transferDTO)).contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isNoContent());
   }
 

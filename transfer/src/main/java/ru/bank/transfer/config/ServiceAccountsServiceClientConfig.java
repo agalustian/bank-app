@@ -8,14 +8,14 @@ import ru.bank.transfer.accounts.client.ApiClient;
 import ru.bank.transfer.accounts.client.api.AccountsServiceApi;
 
 @Configuration
-public class AccountsServiceClientConfig {
+public class ServiceAccountsServiceClientConfig {
 
   @Value("${services.accounts.url}")
   private String accountsURL;
 
   @Bean
-  AccountsServiceApi accountsServiceApi(RestClient restClient) {
-    var client = new ApiClient(restClient);
+  AccountsServiceApi serviceAccountsServiceApi(RestClient serviceRestClient) {
+    var client = new ApiClient(serviceRestClient);
     client.setBasePath(accountsURL);
 
     return new AccountsServiceApi(client);

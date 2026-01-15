@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -23,13 +24,10 @@ public class SecurityConfig {
   @Bean
   public SecurityFilterChain accountsSecurityFilterChain(HttpSecurity http) throws Exception {
     http.authorizeHttpRequests(auth -> {
-      auth.requestMatchers("/actuator/**").permitAll();
-      auth.anyRequest().authenticated();
-    });
-
-    http.oauth2ResourceServer(oauth2 ->
-        oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter()))
-    );
+          auth.requestMatchers("/actuator/**").permitAll();
+          auth.anyRequest().hasRole("SERVICE");
+        }).oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())))
+        .csrf(CsrfConfigurer::disable);
 
     return http.build();
   }
@@ -37,11 +35,11 @@ public class SecurityConfig {
   @Bean
   public JwtAuthenticationConverter jwtAuthenticationConverter() {
     JwtAuthenticationConverter converter = new JwtAuthenticationConverter();
-    converter.setJwtGrantedAuthoritiesConverter(this::extractRealmRoles);
+    converter.setJwtGrantedAuthoritiesConverter(this::extractAuthoritiesFromRealmAccess);
     return converter;
   }
 
-  private Collection<GrantedAuthority> extractRealmRoles(Jwt jwt) {
+  private Collection<GrantedAuthority> extractAuthoritiesFromRealmAccess(Jwt jwt) {
     Map<String, Object> realmAccess = jwt.getClaim("realm_access");
     if (realmAccess == null) {
       return Collections.emptyList();
@@ -53,20 +51,16 @@ public class SecurityConfig {
       return Collections.emptyList();
     }
 
-    List<String> roles = rawRoles.stream()
-        .filter(Objects::nonNull)
-        .map(Object::toString)
-        .toList();
+    var roles = rawRoles.stream().filter(Objects::nonNull).map(Object::toString).toList();
 
-    List<GrantedAuthority> authorities = roles.stream()
-        .map(role -> (GrantedAuthority) new SimpleGrantedAuthority("ROLE_" + role))
+    var authorities = roles.stream().map(role -> (GrantedAuthority) new SimpleGrantedAuthority("ROLE_" + role))
         .collect(Collectors.toList());
 
-    // Дополнительно маппим бизнес-право на отдельный authority
-    if (roles.contains("NOTIFICATIONS")) {
-      authorities.add(new SimpleGrantedAuthority("notifications"));
+    if (roles.contains("SERVICE")) {
+      authorities.add(new SimpleGrantedAuthority("service"));
     }
 
     return authorities;
   }
+
 }

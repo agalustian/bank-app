@@ -3,7 +3,8 @@ package ru.bank.transfer.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.client.RestTemplate;
+
+import org.springframework.web.client.RestClient;
 import ru.bank.transfer.notifications.client.ApiClient;
 import ru.bank.transfer.notifications.client.api.NotificationsServiceApi;
 
@@ -13,8 +14,8 @@ public class NotificationServiceClientConfig {
   private String notificationsURL;
 
   @Bean
-  NotificationsServiceApi notificationsControllerApi(RestTemplate restTemplate) {
-    var client = new ApiClient(restTemplate);
+  NotificationsServiceApi notificationsControllerApi(RestClient serviceRestClient) {
+    var client = new ApiClient(serviceRestClient);
     client.setBasePath(notificationsURL);
 
     return new NotificationsServiceApi(client);

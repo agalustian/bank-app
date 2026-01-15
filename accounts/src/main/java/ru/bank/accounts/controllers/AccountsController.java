@@ -24,6 +24,7 @@ public class AccountsController {
   private AccountsService accountsService;
 
   @GetMapping("")
+  @PreAuthorize("hasRole('ACCOUNTS')")
   ResponseEntity<AccountDTO> getAccount() {
     return ResponseEntity.ok(accountsService.getAccountByLogin(SecurityUtils.getLogin()));
   }
@@ -35,13 +36,15 @@ public class AccountsController {
   }
 
   @GetMapping("/list")
+  @PreAuthorize("hasRole('ACCOUNTS')")
   ResponseEntity<List<AccountShortInfoDTO>> listAccountShortInfo() {
     return ResponseEntity.ok(accountsService.listAccountsShortInfo());
   }
 
-  @PutMapping()
-  ResponseEntity<AccountDTO> updateAccount(@RequestBody @Validated AccountDTO accountDTO) {
-    return ResponseEntity.ok(accountsService.updateAccountByLogin(SecurityUtils.getLogin(), accountDTO));
+  @PutMapping("/{login}")
+  @PreAuthorize("hasRole('ACCOUNTS')")
+  ResponseEntity<AccountDTO> updateAccount(@PathVariable String login, @RequestBody @Validated AccountDTO accountDTO) {
+    return ResponseEntity.ok(accountsService.updateAccountByLogin(login, accountDTO));
   }
 
 }

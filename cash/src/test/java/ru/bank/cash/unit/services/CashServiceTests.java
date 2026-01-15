@@ -39,9 +39,9 @@ class CashServiceTests {
   void shouldDepositMoney() {
     var accountDTO = generateAccountDTO();
 
-    Mockito.when(accountsService.getAccount("test")).thenReturn(accountDTO);
+    Mockito.when(accountsService.getAccount()).thenReturn(accountDTO);
 
-    cashService.depositMoney("test", 1000);
+    cashService.depositMoney(1000);
 
     verify(accountsService, times(1)).deposit(accountDTO, 1000);
     verify(notificationsOutboxJpaRepository, times(1)).save(any(NotificationOutbox.class));
@@ -51,9 +51,9 @@ class CashServiceTests {
   void shouldWithdrawalMoney() {
     var accountDTO = generateAccountDTO();
 
-    Mockito.when(accountsService.getAccount("test")).thenReturn(accountDTO);
+    Mockito.when(accountsService.getAccount()).thenReturn(accountDTO);
 
-    cashService.withdrawalMoney("test", 1000);
+    cashService.withdrawalMoney(1000);
 
     verify(accountsService, times(1)).withdrawal(accountDTO, 1000);
     verify(notificationsOutboxJpaRepository, times(1)).save(any(NotificationOutbox.class));

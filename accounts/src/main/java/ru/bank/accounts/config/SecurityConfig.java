@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.jwt.Jwt;
@@ -23,25 +24,16 @@ public class SecurityConfig {
   @Bean
   public SecurityFilterChain transferSecurityFilterChain(HttpSecurity http) throws Exception {
     http.authorizeHttpRequests(auth -> {
-      auth.requestMatchers("/actuator/**", "/v3/api-docs", "/swagger-ui/index.html").permitAll();
-      auth.anyRequest().hasRole("ACCOUNTS");
-    });
-
-    http.oauth2ResourceServer(oauth2 ->
-        oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter()))
-    );
-
-    http.exceptionHandling(exception -> exception
-        .accessDeniedHandler((request, response, accessDeniedException) -> {
+          auth.requestMatchers("/actuator/**", "/v3/api-docs", "/swagger-ui/index.html").permitAll();
+          auth.anyRequest().authenticated();
+        }).oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())))
+        .csrf(CsrfConfigurer::disable)
+        .exceptionHandling(exception -> exception.accessDeniedHandler((request, response, accessDeniedException) -> {
           response.setStatus(HttpStatus.FORBIDDEN.value());
           response.setContentType("text/plain;charset=UTF-8");
           response.getWriter().write(
-              accessDeniedException.getMessage() != null
-                  ? accessDeniedException.getMessage()
-                  : "Доступ запрещён"
-          );
-        })
-    );
+              accessDeniedException.getMessage() != null ? accessDeniedException.getMessage() : "Доступ запрещён");
+        }));
 
     return http.build();
   }
@@ -66,17 +58,17 @@ public class SecurityConfig {
       return Collections.emptyList();
     }
 
-    var roles = rawRoles.stream()
-        .filter(Objects::nonNull)
-        .map(Object::toString)
-        .toList();
+    var roles = rawRoles.stream().filter(Objects::nonNull).map(Object::toString).toList();
 
-    var authorities = roles.stream()
-        .map(role -> (GrantedAuthority) new SimpleGrantedAuthority("ROLE_" + role))
+    var authorities = roles.stream().map(role -> (GrantedAuthority) new SimpleGrantedAuthority("ROLE_" + role))
         .collect(Collectors.toList());
 
     if (roles.contains("ACCOUNTS")) {
       authorities.add(new SimpleGrantedAuthority("accounts"));
+    }
+
+    if (roles.contains("SERVICE")) {
+      authorities.add(new SimpleGrantedAuthority("service"));
     }
 
     return authorities;

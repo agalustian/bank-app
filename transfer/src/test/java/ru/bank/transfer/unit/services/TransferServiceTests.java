@@ -47,10 +47,10 @@ class TransferServiceTests {
     var fromAccountDTO = generateAccountDTO();
     var toAccountDTO = generateAccountDTO();
 
-    Mockito.when(accountsService.getAccount("from")).thenReturn(fromAccountDTO);
-    Mockito.when(accountsService.getAccount("to")).thenReturn(toAccountDTO);
+    Mockito.when(accountsService.getAccount()).thenReturn(fromAccountDTO);
+    Mockito.when(accountsService.getAccount()).thenReturn(toAccountDTO);
 
-    transferService.transfer(new TransferDTO("from", "to", 1000));
+    transferService.transfer("from", new TransferDTO("to", 1000));
 
     verify(accountsService, times(1)).withdrawal(fromAccountDTO, 1000);
     verify(notificationsOutboxJpaRepository, times(1)).save(any(NotificationOutbox.class));

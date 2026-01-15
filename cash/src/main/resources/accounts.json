@@ -11,12 +11,22 @@
     }
   ],
   "paths": {
-    "/v1/accounts": {
+    "/v1/accounts/{login}": {
       "get": {
         "tags": [
           "accounts-service"
         ],
-        "operationId": "getAccount",
+        "operationId": "getAccountByLogin",
+        "parameters": [
+          {
+            "name": "login",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -35,6 +45,16 @@
           "accounts-service"
         ],
         "operationId": "updateAccount",
+        "parameters": [
+          {
+            "name": "login",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -45,6 +65,26 @@
           },
           "required": true
         },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountDTO"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/accounts": {
+      "get": {
+        "tags": [
+          "accounts-service"
+        ],
+        "operationId": "getAccount",
         "responses": {
           "200": {
             "description": "OK",
