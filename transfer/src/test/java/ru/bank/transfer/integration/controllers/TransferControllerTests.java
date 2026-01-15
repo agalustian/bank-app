@@ -1,5 +1,6 @@
 package ru.bank.transfer.integration.controllers;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -9,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.bank.transfer.controllers.TransferController;
@@ -36,11 +38,20 @@ class TransferControllerTests {
   }
 
   @Test
+  @WithMockUser(roles = "TRANSFER")
   void shouldTransferMoney() throws Exception {
     var transferDTO = new TransferDTO( "to", 100);
 
-    mockMvc.perform(put("/v1/transfer/from").content(toJSON(transferDTO)).contentType(MediaType.APPLICATION_JSON))
+    mockMvc.perform(put("/v1/transfer/from").with(csrf()).content(toJSON(transferDTO)).contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isNoContent());
+  }
+
+  @Test
+  void shouldThrowUnauthorizedError() throws Exception {
+    var transferDTO = new TransferDTO( "to", 100);
+
+    mockMvc.perform(put("/v1/transfer/from").with(csrf()).content(toJSON(transferDTO)).contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().is3xxRedirection());
   }
 
 }
