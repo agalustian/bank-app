@@ -50,7 +50,7 @@ spring:
 
 services:
   notifications:
-    url: ${NOTIFICATIONS_URL:http://notifications:8082}
+    url: ${NOTIFICATIONS_URL:http://localhost:8082}
 
 #logging:
 #  level:
