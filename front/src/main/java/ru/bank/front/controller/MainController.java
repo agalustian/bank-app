@@ -91,7 +91,7 @@ public class MainController {
 
     model.addAttribute("fullname", accountDTO.getFullname());
     model.addAttribute("birthdate", accountDTO.getBirthdate());
-    model.addAttribute("sum", accountDTO.getAmount());
+    model.addAttribute("amount", accountDTO.getAmount());
     model.addAttribute("accounts", accountsShortInfo);
     model.addAttribute("errors", errors);
     model.addAttribute("info", info);

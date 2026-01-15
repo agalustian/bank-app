@@ -17,7 +17,7 @@ public class TransferController {
   @PutMapping("/transfer")
   public ResponseEntity<?> transfer(ProxyExchange<byte[]> proxy) {
     String path = proxy.path("/api");
-    return proxy.uri(transferURL + path).put();
+    return proxy.sensitive().uri(transferURL + path).put();
   }
 
 }

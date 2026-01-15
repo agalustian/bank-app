@@ -1,0 +1,27 @@
+services:
+  postgres:
+    image: postgres:17
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_DB: bankdb
+    ports:
+      - "5432:5432"
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:24.0.5
+    container_name: bank-keycloak
+    command:
+      - start-dev
+      - --http-port=8080
+    environment:
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+      KC_HOSTNAME: localhost
+    ports:
+      - "8080:8080"
+
+networks:
+  shared-network:
+    external: true

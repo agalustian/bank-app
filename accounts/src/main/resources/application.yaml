@@ -17,6 +17,27 @@ spring:
 #    init:
 #      mode: always
 
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${KEYCLOAK_URL:http://localhost:8080/realms/bank-app}
+
+      client:
+        registration:
+          accounts-service:
+            provider: keycloak
+            client-id: accounts-service
+            client-secret: h8cQdPuY7ZyoSmzct39T3qumtP9yqVBL
+            authorization-grant-type: client_credentials
+        provider:
+          keycloak:
+            issuer-uri: ${KEYCLOAK_URL:http://localhost:8080/realms/bank-app}
+
 services:
   notifications:
-    url: ${NOTIFICATIONS_URL}
+    url: ${NOTIFICATIONS_URL:http://localhost:8082}
+
+logging:
+  level:
+    root: DEBUG

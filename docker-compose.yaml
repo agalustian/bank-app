@@ -1,19 +1,23 @@
 services:
-  front:
-    image: front:latest
-    restart: always
-    environment:
-      GATEWAY_PATH: http://gateway:8079/api
-    ports:
-      - "8081:8081"
+#  front:
+#    image: front:latest
+#    restart: always
+#    environment:
+#      GATEWAY_PATH: http://gateway:8079/api
+#      KEYCLOAK_URL: http://0.0.0.0:8080/realms/bank-app
+#    ports:
+#      - "8081:8081"
 
-  gateway:
-    image: gateway:latest
-    restart: always
-    environment:
-      ACCOUNTS_URL: "http://accounts:8084"
-      CASH_URL: "http://cash:8083"
-      TRANSFER_URL: "http://transfer:8085"
+#  gateway:
+#    image: gateway:latest
+#    restart: always
+#    environment:
+#      ACCOUNTS_URL: "http://accounts:8084"
+#      CASH_URL: "http://cash:8083"
+#      TRANSFER_URL: "http://transfer:8085"
+#      KEYCLOAK_URL: "http://bank-keycloak:8080/realms/bank-app"
+#    ports:
+#      - "8079:8079"
 
   cash:
     image: cash:latest
@@ -24,6 +28,8 @@ services:
       PG_PASSWORD: mysecretpassword
       NOTIFICATIONS_URL: "http://notifications:8082"
       ACCOUNTS_URL: "http://accounts:8084"
+    ports:
+      - "8083:8083"
 
   transfer:
     image: transfer:latest
@@ -34,26 +40,24 @@ services:
       PG_PASSWORD: mysecretpassword
       NOTIFICATIONS_URL: "http://notifications:8082"
       ACCOUNTS_URL: "http://accounts:8084"
+    ports:
+      - "8085:8085"
 
-  accounts:
-    image: accounts:latest
-    restart: always
-    environment:
-      PG_URL: jdbc:postgresql://postgres:5432/bankdb?schema=accounts
-      PG_USERNAME: postgres
-      PG_PASSWORD: mysecretpassword
-      NOTIFICATIONS_URL: "http://notifications:8082"
+#  accounts:
+#    image: accounts:latest
+#    restart: always
+#    environment:
+#      PG_URL: jdbc:postgresql://postgres:5432/bankdb?schema=accounts
+#      PG_USERNAME: postgres
+#      PG_PASSWORD: mysecretpassword
+#      NOTIFICATIONS_URL: "http://notifications:8082"
+#    ports:
+#      - "8084:8084"
 
   notifications:
     image: notifications:latest
     restart: always
 
-  postgres:
-    image: postgres:17
-    restart: always
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: mysecretpassword
-      POSTGRES_DB: bankdb
-    ports:
-      - "5432:5432"
+networks:
+  shared-network:
+    external: true

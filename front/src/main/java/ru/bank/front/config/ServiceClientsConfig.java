@@ -11,7 +11,7 @@ import ru.bank.front.transfer.client.api.TransferServiceApi;
 @Configuration
 public class ServiceClientsConfig {
 
-  @Value("${GATEWAY_PATH}")
+  @Value("${gateway.path}")
   private String GATEWAY_PATH;
 
   @Bean

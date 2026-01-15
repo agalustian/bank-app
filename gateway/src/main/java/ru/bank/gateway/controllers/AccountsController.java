@@ -18,19 +18,19 @@ public class AccountsController {
   @GetMapping("/accounts")
   public ResponseEntity<?> getAccount(ProxyExchange<byte[]> proxy) {
     String path = proxy.path("/api");
-    return proxy.uri(accountsURL + path).get();
+    return proxy.sensitive().uri(accountsURL + path).get();
   }
 
   @GetMapping("/accounts/list")
   public ResponseEntity<?> getAccountsShortInfo(ProxyExchange<byte[]> proxy) {
     String path = proxy.path("/api");
-    return proxy.uri(accountsURL + path).get();
+    return proxy.sensitive().uri(accountsURL + path).get();
   }
 
   @PutMapping("/accounts")
   public ResponseEntity<?> updateAccount(ProxyExchange<byte[]> proxy) {
     String path = proxy.path("/api");
-    return proxy.uri(accountsURL + path).put();
+    return proxy.sensitive().uri(accountsURL + path).put();
   }
 
 }

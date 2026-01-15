@@ -5,11 +5,16 @@ spring:
     name: application-gateway
   main:
     banner-mode: off
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${KEYCLOAK_URL:http://localhost:8080/realms/bank-app}
 
 services:
   accounts:
-    url: ${ACCOUNTS_URL}
+    url: ${ACCOUNTS_URL:http://localhost:8084}
   cash:
-    url: ${CASH_URL}
+    url: ${CASH_URL:http://localhost:8083}
   transfer:
-    url: ${TRANSFER_URL}
+    url: ${TRANSFER_URL:http://localhost:8085}

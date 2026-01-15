@@ -30,7 +30,7 @@ public class NotificationsOutboxProcessor {
     this.notificationsService = notificationsService;
   }
 
-  @Scheduled(fixedDelayString = "PT1s")
+//  @Scheduled(fixedDelayString = "PT1s")
   public void processBySchedule() {
     process();
   }

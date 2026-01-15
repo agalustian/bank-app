@@ -17,13 +17,13 @@ public class CashController {
   @PutMapping("/cash/deposit")
   public ResponseEntity<?> deposit(ProxyExchange<byte[]> proxy) {
     String path = proxy.path("/api");
-    return proxy.uri(cashURL + path).put();
+    return proxy.sensitive().uri(cashURL + path).put();
   }
 
   @PutMapping("/cash/withdrawal")
   public ResponseEntity<?> withdrawal(ProxyExchange<byte[]> proxy) {
     String path = proxy.path("/api");
-    return proxy.uri(cashURL + path).put();
+    return proxy.sensitive().uri(cashURL + path).put();
   }
 
 }
