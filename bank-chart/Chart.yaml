@@ -1,0 +1,17 @@
+apiVersion: v2
+name: umbrella-chart
+description: An umbrella Helm chart to deploy core bank APP microservices
+version: 1.0.0
+dependencies:
+  - name: accounts
+    version: "0.0.1"
+    repository: "file://charts/accounts"
+  - name: notifications
+    version: "0.0.1"
+    repository: "file://charts/notifications"
+  - name: cash
+    version: "0.0.1"
+    repository: "file://charts/cash"
+  - name: transfer
+    version: "0.0.1"
+    repository: "file://charts/transfer"
