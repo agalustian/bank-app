@@ -7,7 +7,7 @@ spring:
   main:
     banner-mode: off
   datasource:
-    url: ${PG_URL:jdbc:postgresql://localhosst:5432/bankdb?currentSchema=accounts}
+    url: ${PG_URL:jdbc:postgresql://localhost:5432/bankdb?currentSchema=accounts}
     username: ${PG_USERNAME:postgres}
     password: ${PG_PASSWORD:mysecretpassword}
     driver-class-name: org.postgresql.Driver
