@@ -1,0 +1,3 @@
+rootProject.name = 'bank'
+
+include('front', 'notifications', 'accounts', 'transfer', 'cash', 'gateway')

@@ -1,0 +1,106 @@
+import org.openapitools.generator.gradle.plugin.tasks.GenerateTask
+
+plugins {
+    id "java"
+    id "groovy"
+    id "org.springframework.boot" version "3.5.6"
+    id "io.spring.dependency-management" version "1.1.7"
+    id "org.openapi.generator" version "7.12.0"
+}
+
+group = "ru.bank"
+version = "0.0.1"
+description = "Bank accounts application"
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+ext {
+    set('springCloudVersion', "2025.0.0")
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java', "$projectDir/build/generated/src/main/java"]
+        }
+    }
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.liquibase:liquibase-core:4.25.1'
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.13'
+    implementation "org.springframework.boot:spring-boot-starter-oauth2-client"
+    implementation "org.springframework.boot:spring-boot-starter-oauth2-resource-server"
+    implementation 'org.springframework.cloud:spring-cloud-starter-consul-config'
+    implementation "org.springframework.cloud:spring-cloud-starter-consul-discovery"
+
+    runtimeOnly 'org.postgresql:postgresql'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+    testImplementation "org.springframework.boot:spring-boot-testcontainers"
+    testImplementation "org.testcontainers:junit-jupiter"
+    testImplementation "org.testcontainers:postgresql"
+    testImplementation 'org.springframework.cloud:spring-cloud-starter-contract-stub-runner:4.3.0'
+
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named("test") {
+    useJUnitPlatform {
+        filter {
+            exclude("**/integration/**")
+        }
+    }
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
+
+tasks.register("integrationTest", Test) {
+    useJUnitPlatform {
+        filter {
+            include("**/integration/**")
+        }
+    }
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
+
+tasks.register("buildNotificationsClient", GenerateTask) {
+    generatorName.set("java")
+    inputSpec.set("$projectDir/src/main/resources/notifications.json")
+    outputDir.set("$projectDir/build/generated")
+    modelPackage.set("ru.bank.accounts.notifications.domain")
+    invokerPackage.set("ru.bank.accounts.notifications.client")
+    apiPackage.set("ru.bank.accounts.notifications.client.api")
+    packageName.set("Notifications")
+    configOptions.set([
+            hideGenerationTimestamp: "true",
+            library                : "restclient",
+            useJakartaEe           : "true",
+            useTags                : "true",
+            openApiNullable        : "false",
+            serializableModel      : "true"
+    ])
+}
+
+compileJava.dependsOn tasks.buildNotificationsClient
