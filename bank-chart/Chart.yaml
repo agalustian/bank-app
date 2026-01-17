@@ -3,6 +3,9 @@ name: umbrella-chart
 description: An umbrella Helm chart to deploy core bank APP microservices
 version: 1.0.0
 dependencies:
+  - name: postgresql
+    version: "18.2.0"
+    repository: "https://charts.bitnami.com/bitnami"
   - name: gateway
     version: "0.0.1"
     repository: "file://charts/gateway"
