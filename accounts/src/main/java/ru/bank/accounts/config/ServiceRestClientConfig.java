@@ -1,6 +1,5 @@
 package ru.bank.accounts.config;
 
-import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.oauth2.client.AuthorizedClientServiceOAuth2AuthorizedClientManager;
@@ -16,7 +15,6 @@ import org.springframework.web.client.RestClient;
 public class ServiceRestClientConfig {
 
   @Bean
-  @LoadBalanced
   public RestClient serviceRestClient(RestClient.Builder builder, OAuth2AuthorizedClientManager authorizedClientManager) {
     OAuth2ClientHttpRequestInterceptor requestInterceptor =
         new OAuth2ClientHttpRequestInterceptor(authorizedClientManager);

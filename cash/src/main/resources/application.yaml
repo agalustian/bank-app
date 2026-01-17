@@ -7,7 +7,7 @@ spring:
   main:
     banner-mode: off
   datasource:
-    url: ${PG_URL}
+    url: ${PG_URL}?currentSchema=cash
     username: ${PG_USERNAME}
     password: ${PG_PASSWORD}
     driver-class-name: org.postgresql.Driver
