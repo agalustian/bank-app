@@ -32,6 +32,25 @@ services:
     volumes:
       - "consul_data:/consul/data"
 
+  jenkins:
+    build: .
+    container_name: jenkins
+    user: root
+    env_file:
+      - .env
+    environment:
+      - JAVA_OPTS=-Djenkins.install.runSetupWizard=false
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${KUBECONFIG_PATH}:/root/.kube/config
+
+  volumes:
+    jenkins_home:
+
 networks:
   shared-network:
     external: true
