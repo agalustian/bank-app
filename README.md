@@ -63,7 +63,7 @@ Build jar: `sh  ./gradlew build` - path `build/libs/[service]-0.0.1.jar`
 
 Build Dockerfile (in each module):  `sh ./scripts/build-docker-images.sh`
 
-Run infra (postgres, keycloak, consul): `sh ./scripts/start-infra`
+Run infra (postgres, keycloak): `sh ./scripts/start-infra`
 
 ## Actuator endpoints
 Opened actuator endpoints list:

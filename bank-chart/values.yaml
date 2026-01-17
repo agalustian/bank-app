@@ -6,19 +6,19 @@ gateway:
 cash:
   replicaCount: 2
   image:
-    tag: lasest
+    tag: latest
 
 transfer:
   replicaCount: 2
   image:
-    tag: lasest
+    tag: latest
 
 accounts:
   replicaCount: 2
   image:
-    tag: lasest
+    tag: latest
 
 notifications:
   replicaCount: 2
   image:
-    tag: lasest
+    tag: latest

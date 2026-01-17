@@ -7,29 +7,16 @@ spring:
   main:
     banner-mode: off
   datasource:
-    url: ${PG_URL:jdbc:postgresql://localhost:5432/bankdb?currentSchema=accounts}
+    url: ${PG_URL:jdbc:postgresql://postgres-postgresql:5432/bankdb?currentSchema=accounts}
     username: ${PG_USERNAME:postgres}
     password: ${PG_PASSWORD:mysecretpassword}
     driver-class-name: org.postgresql.Driver
   liquibase:
     change-log: "classpath:/db/changelog/db.changelog-master.yaml"
+    default-schema: "accounts"
 #  sql:
 #    init:
 #      mode: always
-  cloud:
-    consul:
-      host: ${CONSUL_URL:localhost}
-      port: ${CONSUL_PORT:8500}
-      discovery:
-        service-name: accounts
-      config:
-        enabled: true
-        format: YAML
-        prefix: config
-        data-key: data
-        defaultContext: application
-  config:
-    import: "optional:consul:"
 
   security:
     oauth2:

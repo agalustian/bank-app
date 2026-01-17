@@ -1,13 +1,13 @@
 services:
-  postgres:
-    image: postgres:17
-    restart: always
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: mysecretpassword
-      POSTGRES_DB: bankdb
-    ports:
-      - "5432:5432"
+#  postgres:
+#    image: postgres:17
+#    restart: always
+#    environment:
+#      POSTGRES_USER: postgres
+#      POSTGRES_PASSWORD: mysecretpassword
+#      POSTGRES_DB: bankdb
+#    ports:
+#      - "5432:5432"
 
   keycloak:
     image: quay.io/keycloak/keycloak:24.0.5
@@ -23,37 +23,25 @@ services:
     ports:
       - "8080:8080"
 
-  consul-server:
-    image: "hashicorp/consul:latest"
-    ports:
-      - "8500:8500" # HTTP API and UI
-      - "8600:8600/udp" # DNS
-    command: "agent -server -dev -ui -client=0.0.0.0"
-    volumes:
-      - "consul_data:/consul/data"
-
-  jenkins:
-    build: .
-    container_name: jenkins
-    user: root
-    env_file:
-      - .env
-    environment:
-      - JAVA_OPTS=-Djenkins.install.runSetupWizard=false
-    ports:
-      - "8080:8080"
-      - "50000:50000"
-    volumes:
-      - jenkins_home:/var/jenkins_home
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ${KUBECONFIG_PATH}:/root/.kube/config
-
-  volumes:
-    jenkins_home:
+#  jenkins:
+#    build: .
+#    container_name: jenkins
+#    user: root
+#    env_file:
+#      - .env
+#    environment:
+#      - JAVA_OPTS=-Djenkins.install.runSetupWizard=false
+#    ports:
+#      - "8080:8080"
+#      - "50000:50000"
+#    volumes:
+#      - jenkins_home:/var/jenkins_home
+#      - /var/run/docker.sock:/var/run/docker.sock
+#      - ${KUBECONFIG_PATH}:/root/.kube/config
+#
+#  volumes:
+#    jenkins_home:
 
 networks:
   shared-network:
     external: true
-
-volumes:
-  consul_data:
