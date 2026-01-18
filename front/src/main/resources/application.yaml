@@ -22,7 +22,7 @@ spring:
             issuer-uri: ${KEYCLOAK_URL}
 
 gateway:
-  path: ${GATEWAY_PATH:http://gateway.dev.local/api}
+  path: ${GATEWAY_PATH:http://localhost:31535/api}
 
 #logging:
 #  level:

@@ -13,6 +13,6 @@ spec:
             pathType: Prefix
             backend:
               service:
-                name: gateway
+                name: bank-gateway
                 port:
                   number: 8079

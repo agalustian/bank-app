@@ -36,3 +36,14 @@ services:
     url: ${NOTIFICATIONS_URL:http://localhost:8082}
   accounts:
     url: ${ACCOUNTS_URL:http://localhost:8084}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+      probes:
+        enabled: true
