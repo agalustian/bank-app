@@ -18,7 +18,7 @@ Test tools: `Spring boot test \ JUNIT 5 \ Jupiter \ Mockito \ TestContainers`
 
 Build tools: `Gradle`
 
-CI\CD: `k8s \ helm \ jenkins`
+CI\CD: `k8s \ helm \ jenkins` - gateway + cash + transfer + accounts + notifications
 
 HTML templates: `Thymeleaf`
 
@@ -73,7 +73,9 @@ Helm release uninstall: `helm uninstall bank -n dev`
 
 Check k8s pods: `kubectl get pods -n dev`
 
-Helm chart lint: ` helm lint ./bank-chart`
+Helm chart lint: `helm lint ./bank-chart`
+
+Helm chart tests: `helm test bank -n dev`
 
 ## Actuator endpoints
 Opened actuator endpoints list:
