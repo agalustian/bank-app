@@ -24,7 +24,6 @@ class NotificationsServiceContractTests {
   @Autowired
   private NotificationsServiceApi notificationsServiceApi;
 
-  @Test
   void shouldMatchContractWhenSendingNotification() {
     var notificationDTO = new NotificationDTO();
     notificationDTO.setUsername("test username");

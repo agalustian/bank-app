@@ -7,7 +7,7 @@ spring:
   main:
     banner-mode: off
   datasource:
-    url: ${PG_URL}?currentSchema=accounts
+    url: ${PG_URL:jdbc:postgresql://localhost:5432/bankdb}?currentSchema=accounts
     username: ${PG_USERNAME:postgres}
     password: ${PG_PASSWORD:mysecretpassword}
     driver-class-name: org.postgresql.Driver
@@ -22,7 +22,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: ${KEYCLOAK_URL:http://localhost:8080/realms/bank-app}
+          issuer-uri: ${KEYCLOAK_URL:localhost}
 
       client:
         registration:
@@ -33,7 +33,7 @@ spring:
             authorization-grant-type: client_credentials
         provider:
           keycloak:
-            issuer-uri: ${KEYCLOAK_URL:http://localhost:8080/realms/bank-app}
+            issuer-uri: ${KEYCLOAK_URL:localhost}
 
 services:
   notifications:
