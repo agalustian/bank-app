@@ -16,33 +16,27 @@ pipeline {
 
     stages {
         stage('Build & Unit Tests') {
-            parallel {
-//                 stage('Notifications Service') {
-//                     steps {
-//                         sh './gradlew notifications:integrationTest'
-//                     }
-//                 }
-                stage('Accounts Service') {
-                    steps {
-                        sh './gradlew accounts:integrationTest'
-                    }
+//             parallel {
+                steps {
+                    sh './gradlew notifications:build'
+                    sh './gradlew accounts:build'
+                    sh './gradlew cash:build'
+                    sh './gradlew transfer:build'
+                    sh './gradlew gateway:build'
                 }
-//                 stage('Cash Service') {
-//                     steps {
-//                         sh './gradlew cash:integrationTest'
-//                     }
-//                 }
-//                 stage('Transfer Service') {
-//                     steps {
-//                         sh './gradlew transfer:integrationTest'
-//                     }
-//                 }
-//                 stage('Gateway Service') {
-//                     steps {
-//                        sh './gradlew gateway:integrationTest'
-//                     }
-//                 }
-            }
+//             }
+        }
+         stage('Integration Tests') {
+//             parallel {
+                steps {
+                    sh './gradlew notifications:integrationTest'
+                    sh './gradlew accounts:integrationTest'
+                    sh './gradlew cash:integrationTest'
+                    sh './gradlew transfer:integrationTest'
+                    sh './gradlew gateway:integrationTest'
+                }
+
+//             }
         }
 
         stage('Build Docker Images') {
@@ -92,7 +86,7 @@ pipeline {
 
         stage('Helm Deploy') {
             steps {
-                sh """helm upgrade --install bank ./bank-chart/ -n dev"""
+                sh """helm upgrade --install bank ./bank-chart/ -n ${NAMESPACE}"""
             }
             post {
                  success {
