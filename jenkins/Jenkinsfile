@@ -1,0 +1,117 @@
+pipeline {
+    agent any
+
+    environment {
+        DOCKER_REGISTRY             = credentials('DOCKER_REGISTRY')
+        DB_PASSWORD                 = credentials('DB_PASSWORD')
+        GITHUB_USERNAME             = credentials('GITHUB_USERNAME')
+        DB_NAME                     = 'bankdb'
+        DB_USER                     = 'postgres'
+        IMAGE_TAG                   = "${env.BUILD_NUMBER}"
+        NAMESPACE                   = 'dev'
+        ACCOUNTS_CLIENT_SECRET      = credentials('ACCOUNTS_CLIENT_SECRET')
+        CASH_CLIENT_SECRET          = credentials('CASH_CLIENT_SECRET')
+        TRANSFER_CLIENT_SECRET      = credentials('TRANSFER_CLIENT_SECRET')
+    }
+
+    stages {
+        stage('Build & Unit Tests') {
+            parallel {
+                stage('Notifications Service') {
+                    steps {
+                        dir('notifications-service') {
+                            sh './gradlew test'
+                        }
+                    }
+                }
+                stage('Accounts Service') {
+                    steps {
+                        dir('accounts-service') {
+                            sh './gradlew test'
+                        }
+                    }
+                }
+                stage('Cash Service') {
+                    steps {
+                        dir('cash-service') {
+                            sh './gradlew test'
+                        }
+                    }
+                }
+                stage('Transfer Service') {
+                    steps {
+                        dir('transfer-service') {
+                            sh './gradlew test'
+                        }
+                    }
+                }
+                stage('Gateway Service') {
+                    steps {
+                        dir('gateway-service') {
+                            sh './gradlew test'
+                        }
+                    }
+                }
+            }
+        }
+
+        stage('Build Docker Images') {
+            steps {
+                sh """
+                docker build -t ${DOCKER_REGISTRY}/notifications-service:${IMAGE_TAG} notifications-service
+                docker build -t ${DOCKER_REGISTRY}/accounts-service:${IMAGE_TAG} accounts-service
+                docker build -t ${DOCKER_REGISTRY}/cash-service:${IMAGE_TAG} cash-service
+                docker build -t ${DOCKER_REGISTRY}/transfer-service:${IMAGE_TAG} transfer-service
+                docker build -t ${DOCKER_REGISTRY}/gateway-service:${IMAGE_TAG} gateway-service
+                """
+            }
+        }
+
+        stage('Push Docker Images') {
+            steps {
+                withCredentials([string(credentialsId: 'GHCR_TOKEN', variable: 'GHCR_TOKEN')]) {
+                    sh """
+                    echo \$GHCR_TOKEN | docker login ghcr.io -u ${GITHUB_USERNAME} --password-stdin
+                    docker push ${DOCKER_REGISTRY}/notifications-service:${IMAGE_TAG}
+                    docker push ${DOCKER_REGISTRY}/accounts-service:${IMAGE_TAG}
+                    docker push ${DOCKER_REGISTRY}/cash-service:${IMAGE_TAG}
+                    docker push ${DOCKER_REGISTRY}/transfer-service:${IMAGE_TAG}
+                    docker push ${DOCKER_REGISTRY}/gateway-service:${IMAGE_TAG}
+                    """
+                }
+            }
+        }
+
+        stage('Create DB Secrets') {
+            steps {
+                sh """
+                    kubectl create secret generic accounts-service \\
+                        --from-literal=PG_PASSWORD=${DB_PASSWORD} \\
+                        --from-literal=ACCOUNTS_CLIENT_SECRET=${ACCOUNTS_CLIENT_SECRET} \\
+                        -n ${namespace} --dry-run=client -o yaml | kubectl apply -f -
+
+                    kubectl create secret generic cash-service \\
+                        --from-literal=PG_PASSWORD=${DB_PASSWORD} \\
+                        --from-literal=CASH_CLIENT_SECRET=${CASH_CLIENT_SECRET} \\
+                        -n ${namespace} --dry-run=client -o yaml | kubectl apply -f -
+
+                    kubectl create secret generic transfer-service \\
+                        --from-literal=PG_PASSWORD=${DB_PASSWORD} \\
+                        --from-literal=TRANSFER_CLIENT_SECRET=${TRANSFER_CLIENT_SECRET} \\
+                        -n ${namespace} --dry-run=client -o yaml | kubectl apply -f -
+                """
+            }
+        }
+
+        stage('Helm Deploy') {
+            steps {
+                sh """helm upgrade --install bank ./bank-chart/ -n dev"""
+            }
+            post {
+                 success {
+                      echo "Deployed to ${NAMESPACE}"
+                 }
+            }
+        }
+    }
+}
