@@ -16,6 +16,6 @@ spring:
 
 services:
   notifications:
-    url: ${NOTIFICATIONS_URL:http://localhost:8082}
+    url: http://localhost:8082
   accounts:
-    url: ${ACCOUNTS_URL:http://localhost:8084}
+    url: http://localhost:8084

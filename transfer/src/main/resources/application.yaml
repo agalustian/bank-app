@@ -9,7 +9,7 @@ spring:
   datasource:
     url: ${PG_URL}?currentSchema=transfer
     username: ${PG_USERNAME}
-    password: ${PG_PASSWORD:mysecretpassword}
+    password: ${PG_PASSWORD}
     driver-class-name: org.postgresql.Driver
   liquibase:
     change-log: "classpath:/db/changelog/db.changelog-master.yaml"
@@ -18,24 +18,24 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: ${KEYCLOAK_URL:http://localhost:8080/realms/bank-app}
+          issuer-uri: ${KEYCLOAK_URL}
 
       client:
         registration:
           transfer-service:
             provider: keycloak
             client-id: transfer-service
-            client-secret: ${TRANSFER_CLIENT_SECRET:AvBOece6UFxzluCvGvSv7aexgSqidri8}
+            client-secret: ${TRANSFER_CLIENT_SECRET}
             authorization-grant-type: client_credentials
         provider:
           keycloak:
-            issuer-uri: ${KEYCLOAK_URL:http://localhost:8080/realms/bank-app}
+            issuer-uri: ${KEYCLOAK_URL}
 
 services:
   notifications:
-    url: ${NOTIFICATIONS_URL:http://localhost:8082}
+    url: ${NOTIFICATIONS_URL}
   accounts:
-    url: ${ACCOUNTS_URL:http://localhost:8084}
+    url: ${ACCOUNTS_URL:http}
 
 management:
   endpoints:

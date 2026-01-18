@@ -9,15 +9,15 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: ${KEYCLOAK_URL:http://localhost:8080/realms/bank-app}
+          issuer-uri: ${KEYCLOAK_URL}
 
 services:
   accounts:
-    url: ${ACCOUNTS_URL:http://localhost:8084}
+    url: ${ACCOUNTS_URL}
   cash:
-    url: ${CASH_URL:http://localhost:8083}
+    url: ${CASH_URL}
   transfer:
-    url: ${TRANSFER_URL:http://localhost:8085}
+    url: ${TRANSFER_URL}
 
 management:
   endpoints:
