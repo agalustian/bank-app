@@ -4,21 +4,27 @@ gateway:
     type: NodePort
 
 cash:
-  replicaCount: 2
+  replicaCount: 1
   image:
     tag: latest
 
 transfer:
-  replicaCount: 2
+  replicaCount: 1
   image:
     tag: latest
 
 accounts:
-  replicaCount: 2
+  replicaCount: 1
   image:
     tag: latest
 
 notifications:
-  replicaCount: 2
+  replicaCount: 1
   image:
     tag: latest
+
+postgresql:
+  auth:
+    postgresPassword: "mysecretpassword"
+    username: "custom-user"
+    password: "mysecretpassword"

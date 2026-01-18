@@ -22,3 +22,13 @@ spec:
             - containerPort: {{ .Values.service.port }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: {{ include "mychart.fullname" . }}-config
+          volumeMounts:
+              - name: config-volume
+                mountPath: /etc/config
+      volumes:
+        - name: config-volume
+          configMap:
+            name: {{ include "mychart.fullname" . }}-config
