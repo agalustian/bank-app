@@ -13,9 +13,9 @@ def githubToken = env['GITHUB_TOKEN']
 def ghcrToken = env['GHCR_TOKEN']
 def dockerRegistry = env['DOCKER_REGISTRY']
 def dbPassword = env['DB_PASSWORD']
-def accountsSecret = env['ACCOUNTS_CLIENT_SECRET']
-def cashSecret = env['CASH_CLIENT_SECRET']
-def transferSecret = env['TRANSFER_CLIENT_SECRET']
+//def accountsSecret = env['ACCOUNTS_CLIENT_SECRET']
+//def cashSecret = env['CASH_CLIENT_SECRET']
+//def transferSecret = env['TRANSFER_CLIENT_SECRET']
 
 // Получаем хранилище учётных данных
 def store = Jenkins.instance.getExtensionList(
@@ -83,37 +83,37 @@ if (dbPassword) {
     store.addCredentials(Domain.global(), dbCred)
 }
 
-if (accountsSecret) {
-    println "--> Creating credential: ACCOUNTS_CLIENT_SECRET"
-    def dbCred = new StringCredentialsImpl(
-            CredentialsScope.GLOBAL,
-            "ACCOUNTS_CLIENT_SECRET",
-            "ACCOUNTS CLIENT SECRET from ENV",
-            Secret.fromString(accountsSecret)
-    )
-    store.addCredentials(Domain.global(), dbCred)
-}
-
-if (cashSecret) {
-    println "--> Creating credential: CASH_CLIENT_SECRET"
-    def dbCred = new StringCredentialsImpl(
-            CredentialsScope.GLOBAL,
-            "CASH_CLIENT_SECRET",
-            "CASH CLIENT SECRET from ENV",
-            Secret.fromString(cashSecret)
-    )
-    store.addCredentials(Domain.global(), dbCred)
-}
-
-if (transferSecret) {
-    println "--> Creating credential: TRANSFER_CLIENT_SECRET"
-    def dbCred = new StringCredentialsImpl(
-            CredentialsScope.GLOBAL,
-            "TRANSFER_CLIENT_SECRET",
-            "TRANSFER CLIENT SECRET from ENV",
-            Secret.fromString(transferSecret)
-    )
-    store.addCredentials(Domain.global(), dbCred)
-}
+//if (accountsSecret) {
+//    println "--> Creating credential: ACCOUNTS_CLIENT_SECRET"
+//    def dbCred = new StringCredentialsImpl(
+//            CredentialsScope.GLOBAL,
+//            "ACCOUNTS_CLIENT_SECRET",
+//            "ACCOUNTS CLIENT SECRET from ENV",
+//            Secret.fromString(accountsSecret)
+//    )
+//    store.addCredentials(Domain.global(), dbCred)
+//}
+//
+//if (cashSecret) {
+//    println "--> Creating credential: CASH_CLIENT_SECRET"
+//    def dbCred = new StringCredentialsImpl(
+//            CredentialsScope.GLOBAL,
+//            "CASH_CLIENT_SECRET",
+//            "CASH CLIENT SECRET from ENV",
+//            Secret.fromString(cashSecret)
+//    )
+//    store.addCredentials(Domain.global(), dbCred)
+//}
+//
+//if (transferSecret) {
+//    println "--> Creating credential: TRANSFER_CLIENT_SECRET"
+//    def dbCred = new StringCredentialsImpl(
+//            CredentialsScope.GLOBAL,
+//            "TRANSFER_CLIENT_SECRET",
+//            "TRANSFER CLIENT SECRET from ENV",
+//            Secret.fromString(transferSecret)
+//    )
+//    store.addCredentials(Domain.global(), dbCred)
+//}
 
 println "--> Credential setup complete."

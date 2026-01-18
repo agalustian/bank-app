@@ -51,7 +51,7 @@ class TransferControllerTests {
     var transferDTO = new TransferDTO( "to", 100);
 
     mockMvc.perform(put("/v1/transfer/from").with(csrf()).content(toJSON(transferDTO)).contentType(MediaType.APPLICATION_JSON))
-        .andExpect(status().is3xxRedirection());
+        .andExpect(status().isUnauthorized());
   }
 
 }

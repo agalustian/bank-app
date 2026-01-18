@@ -8,7 +8,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -51,7 +53,7 @@ class CashControllerTests {
     var editMoneyDTO = new EditMoneyDTO(100);
 
     mockMvc.perform(put("/v1/cash/deposit").with(csrf()).content(toJSON(editMoneyDTO)).contentType(MediaType.APPLICATION_JSON))
-        .andExpect(status().is3xxRedirection());
+        .andExpect(status().isUnauthorized());
   }
 
   @Test
@@ -68,7 +70,7 @@ class CashControllerTests {
     var editMoneyDTO = new EditMoneyDTO(100);
 
     mockMvc.perform(put("/v1/cash/withdrawal").with(csrf()).content(toJSON(editMoneyDTO)).contentType(MediaType.APPLICATION_JSON))
-        .andExpect(status().is3xxRedirection());
+        .andExpect(status().isUnauthorized());
   }
 
 }

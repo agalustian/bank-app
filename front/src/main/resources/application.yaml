@@ -19,7 +19,7 @@ spring:
             provider: keycloak
         provider:
           keycloak:
-            issuer-uri: ${KEYCLOAK_URL}
+            issuer-uri: ${KEYCLOAK_URL:http://localhost:8080/realms/bank-app}
 
 gateway:
   path: ${GATEWAY_PATH:http://localhost:30862/api}

@@ -1,0 +1,47 @@
+server:
+  port: 8084
+
+spring:
+  application:
+    name: accounts
+  main:
+    banner-mode: off
+  datasource:
+    url: ${PG_URL:jdbc:postgresql://localhost:5432/bankdb}
+    username: ${PG_USERNAME:postgres}
+    password: ${PG_PASSWORD:mysecretpassword}
+    driver-class-name: org.postgresql.Driver
+  liquibase:
+    change-log: "classpath:/db/changelog/db.changelog-master.yaml"
+
+#  security:
+#    oauth2:
+#      resourceserver:
+#        jwt:
+#          issuer-uri: ${KEYCLOAK_URL:http://localhost:8080/realms/bank-app}
+#
+#      client:
+#        registration:
+#          accounts-service:
+#            provider: keycloak
+#            client-id: accounts-service
+#            client-secret: ${ACCOUNTS_CLIENT_SECRET:92dkcPbazLPcy25UHQVwh602v0abCDpf}
+#            authorization-grant-type: client_credentials
+#        provider:
+#          keycloak:
+#            issuer-uri: ${KEYCLOAK_URL:http://localhost:8080/realms/bank-app}
+
+services:
+  notifications:
+    url: ${NOTIFICATIONS_URL:http://localhost:8082}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+      probes:
+        enabled: true

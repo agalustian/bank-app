@@ -22,7 +22,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: ${KEYCLOAK_URL:localhost}
+          issuer-uri: ${KEYCLOAK_URL:http://localhost:8080/realms/bank-app}
 
       client:
         registration:
@@ -33,7 +33,7 @@ spring:
             authorization-grant-type: client_credentials
         provider:
           keycloak:
-            issuer-uri: ${KEYCLOAK_URL:localhost}
+            issuer-uri: ${KEYCLOAK_URL:http://localhost:8080/realms/bank-app}
 
 services:
   notifications:

@@ -7,8 +7,8 @@ spring:
   main:
     banner-mode: off
   datasource:
-    url: ${PG_URL}?currentSchema=cash
-    username: ${PG_USERNAME}
+    url: ${PG_URL:jdbc:postgresql://localhost:5432/bankdb}?currentSchema=cash
+    username: ${PG_USERNAME:postgres}
     password: ${PG_PASSWORD:mysecretpassword}
     driver-class-name: org.postgresql.Driver
   liquibase:
@@ -18,7 +18,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: ${KEYCLOAK_URL}
+          issuer-uri: ${KEYCLOAK_URL:http://localhost:8080/realms/bank-app}
 
       client:
         registration:
@@ -29,7 +29,7 @@ spring:
             authorization-grant-type: client_credentials
         provider:
           keycloak:
-            issuer-uri: ${KEYCLOAK_URL}
+            issuer-uri: ${KEYCLOAK_URL:http://localhost:8080/realms/bank-app}
 
 services:
   notifications:
