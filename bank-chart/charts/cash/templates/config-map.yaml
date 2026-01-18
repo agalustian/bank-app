@@ -5,7 +5,6 @@ metadata:
 data:
   PG_URL: "jdbc:postgresql://bank-postgresql:5432/bankdb"
   PG_USERNAME: postgres
-  PG_PASSWORD: mysecretpassword
   KEYCLOAK_URL: http://192.168.1.108:8080/realms/bank-app
   NOTIFICATIONS_URL: http://bank-notifications:8082
   ACCOUNTS_URL: http://bank-accounts:8084
