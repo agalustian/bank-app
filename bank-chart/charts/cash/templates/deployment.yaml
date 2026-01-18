@@ -23,6 +23,8 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           envFrom:
+            - secretRef:
+                name: cash-service
             - configMapRef:
                 name: {{ include "mychart.fullname" . }}-config
           volumeMounts:
