@@ -7,7 +7,7 @@ spring:
   main:
     banner-mode: off
   kafka:
-    bootstrap-servers: ${KAFKA_HOST:kafka-broker-0.kafka-headless.default.svc.cluster.local:9092}
+    bootstrap-servers: ${KAFKA_HOST:192.168.5.15:9095}
     consumer:
       group-id: bank-notifications-service-group
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
