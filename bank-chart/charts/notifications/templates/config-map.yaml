@@ -4,3 +4,4 @@ metadata:
   name: {{ include "mychart.fullname" . }}-config
 data:
   KEYCLOAK_URL: http://192.168.1.108:8080/realms/bank-app
+  KAFKA_HOST: kafka-broker-0.kafka-headless.default.svc.cluster.local:9092
