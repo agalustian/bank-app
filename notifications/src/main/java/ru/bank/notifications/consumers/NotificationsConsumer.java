@@ -23,10 +23,10 @@ public class NotificationsConsumer {
   private ObjectMapper objectMapper;
 
   @KafkaListener(topics = "notifications", groupId = "bank-notifications-service-group")
-  public void processNotification(ConsumerRecord<String, String> record) {
+  public void processNotification(ConsumerRecord<String, Notification> record) {
     logger.info("Получено сообщение: ключ [{}], значение [{}]", record.key(), record.value());
-    var notification = toNotification(record.value());
-    notificationsService.sendNotification(notification);
+
+    notificationsService.sendNotification(record.value());
   }
 
   private Notification toNotification(String jsonNotification) {

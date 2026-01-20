@@ -27,7 +27,7 @@ public class NotificationsConsumerTests {
   public static final String TEST_TOPIC_NAME = "notifications";
 
   @Autowired
-  private KafkaTemplate<String, String> kafkaTemplate;
+  private KafkaTemplate<String, Notification> kafkaTemplate;
 
   @Autowired
   private ObjectMapper objectMapper;
@@ -38,7 +38,7 @@ public class NotificationsConsumerTests {
   @Test
   public void testSimpleProcessor() {
     var testNotification = new Notification("test-text", "test-username");
-    kafkaTemplate.send(TEST_TOPIC_NAME, "Yandex", toJson(testNotification));
+    kafkaTemplate.send(TEST_TOPIC_NAME, "Yandex", testNotification);
 
     await()
         .atMost(5, TimeUnit.SECONDS)

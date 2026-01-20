@@ -13,6 +13,11 @@ spring:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonSerializer
       auto-offset-reset: latest
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: "*"
 
 management:
   endpoints:
