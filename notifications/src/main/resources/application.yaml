@@ -7,11 +7,11 @@ spring:
   main:
     banner-mode: off
   kafka:
-    bootstrap-servers: ${KAFKA_HOST}
+    bootstrap-servers: ${KAFKA_HOST:kafka-broker-0.kafka-headless.default.svc.cluster.local:9092}
     consumer:
       group-id: bank-notifications-service-group
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.springframework.kafka.support.serializer.JsonSerializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       auto-offset-reset: latest
       properties:
         spring:
