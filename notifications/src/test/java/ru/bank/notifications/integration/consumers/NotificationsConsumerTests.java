@@ -36,7 +36,7 @@ public class NotificationsConsumerTests {
   private NotificationsService notificationsService;
 
   @Test
-  public void testSimpleProcessor() {
+  public void shouldProcessNotificationMessage() {
     var testNotification = new Notification("test-text", "test-username");
     kafkaTemplate.send(TEST_TOPIC_NAME, "Yandex", testNotification);
 
@@ -46,14 +46,6 @@ public class NotificationsConsumerTests {
         .untilAsserted(() -> {
           verify(notificationsService, times(1)).sendNotification(testNotification);
         });
-  }
-
-  private String toJson(Notification notification) {
-    try {
-      return objectMapper.writeValueAsString(notification);
-    } catch (JsonProcessingException e) {
-      return "";
-    }
   }
 
 }

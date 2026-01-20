@@ -29,12 +29,4 @@ public class NotificationsConsumer {
     notificationsService.sendNotification(record.value());
   }
 
-  private Notification toNotification(String jsonNotification) {
-    try {
-      return objectMapper.readValue(jsonNotification, Notification.class);
-    } catch (JsonProcessingException e) {
-      return null;
-    }
-  }
-
 }
