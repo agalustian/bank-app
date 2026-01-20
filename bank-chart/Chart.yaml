@@ -6,6 +6,9 @@ dependencies:
   - name: postgresql
     version: "18.2.0"
     repository: "https://charts.bitnami.com/bitnami"
+  - name: kafka
+    version: "18.0.1"
+    repository: "https://helm-charts.itboon.top/kafka"
   - name: gateway
     version: "0.0.1"
     repository: "file://charts/gateway"
