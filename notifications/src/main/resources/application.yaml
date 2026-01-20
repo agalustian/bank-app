@@ -9,8 +9,10 @@ spring:
   kafka:
     bootstrap-servers: ${KAFKA_HOST}
     consumer:
-      group-id: bank-notifications-service
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      group-id: bank-notifications-service-group
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonSerializer
+      auto-offset-reset: latest
 
 management:
   endpoints:

@@ -1,15 +1,17 @@
 package ru.bank.notifications.consumers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import ru.bank.notifications.models.Notification;
 import ru.bank.notifications.services.NotificationsService;
 
-@Component
+@Service
 public class NotificationsConsumer {
 
   private static final Logger logger = LoggerFactory.getLogger(NotificationsConsumer.class);
@@ -17,12 +19,22 @@ public class NotificationsConsumer {
   @Autowired
   private NotificationsService notificationsService;
 
-  @KafkaListener(topics = "notifications")
-  public void print(ConsumerRecord<?, ?> record) {
-    logger.info("Получено сообщение: ключ [{}], значение [{}]", record.key(), record.value());
+  @Autowired
+  private ObjectMapper objectMapper;
 
-    // TODO fixme
-    notificationsService.sendNotification(new Notification(record.value().toString(), record.value().toString()));
+  @KafkaListener(topics = "notifications", groupId = "bank-notifications-service-group")
+  public void processNotification(ConsumerRecord<String, String> record) {
+    logger.info("Получено сообщение: ключ [{}], значение [{}]", record.key(), record.value());
+    var notification = toNotification(record.value());
+    notificationsService.sendNotification(notification);
+  }
+
+  private Notification toNotification(String jsonNotification) {
+    try {
+      return objectMapper.readValue(jsonNotification, Notification.class);
+    } catch (JsonProcessingException e) {
+      return null;
+    }
   }
 
 }

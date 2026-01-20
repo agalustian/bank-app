@@ -11,6 +11,10 @@ public class NotificationsService {
   private static final Logger logger = LoggerFactory.getLogger(NotificationsService.class);
 
   public void sendNotification(Notification notification) {
+    if (notification == null) {
+      return;
+    }
+
     logger.info("Notification for '{}' with text '{}'", notification.username(), notification.text());
   }
 
