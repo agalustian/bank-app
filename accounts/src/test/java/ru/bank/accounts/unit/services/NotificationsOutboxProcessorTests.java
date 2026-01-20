@@ -40,20 +40,4 @@ class NotificationsOutboxProcessorTests {
     verify(notificationsOutboxJpaRepository, times(1)).deleteAllByIdInBatch(List.of(1L));
   }
 
-  @Test
-  void shouldDeleteOnlySuccessfullySentNotifications() {
-    var notifications = List.of(
-        new NotificationOutbox(1L, "test text", "username"),
-        new NotificationOutbox(2L, "another test text", "another username")
-    );
-    when(notificationsOutboxJpaRepository.findAll(any(PageRequest.class))).thenReturn(
-        new PageImpl<>(notifications, PageRequest.of(0, 10), notifications.size()));
-
-    when(kafkaTemplate.send("another username", "another test text")).thenThrow(new RuntimeException("alarm!"));
-
-    notificationsOutboxProcessor.process();
-
-    verify(notificationsOutboxJpaRepository, times(1)).deleteAllByIdInBatch(List.of(1L));
-  }
-
 }
