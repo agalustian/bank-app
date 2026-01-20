@@ -8,3 +8,4 @@ data:
   KEYCLOAK_URL: http://192.168.1.108:8080/realms/bank-app
   NOTIFICATIONS_URL: http://bank-notifications:8082
   ACCOUNTS_URL: http://bank-accounts:8084
+  KAFKA_HOST: kafka-broker-0.kafka-headless.default.svc.cluster.local:9092
