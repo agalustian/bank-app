@@ -7,51 +7,49 @@ spring:
   main:
     banner-mode: off
   datasource:
-    url: ${PG_URL:jdbc:postgresql://localhosst:5432/bankdb?currentSchema=accounts}
-    username: ${PG_USERNAME:postgres}
-    password: ${PG_PASSWORD:mysecretpassword}
+    url: ${PG_URL}?currentSchema=accounts
+    username: ${PG_USERNAME}
+    password: ${PG_PASSWORD}
     driver-class-name: org.postgresql.Driver
   liquibase:
     change-log: "classpath:/db/changelog/db.changelog-master.yaml"
+    default-schema: "accounts"
 #  sql:
 #    init:
 #      mode: always
-  cloud:
-    consul:
-      host: ${CONSUL_URL:localhost}
-      port: ${CONSUL_PORT:8500}
-      discovery:
-        service-name: accounts
-      config:
-        enabled: true
-        format: YAML
-        prefix: config
-        data-key: data
-        defaultContext: application
-  config:
-    import: "optional:consul:"
 
   security:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: ${KEYCLOAK_URL:http://localhost:8080/realms/bank-app}
+          issuer-uri: ${KEYCLOAK_URL}
 
       client:
         registration:
           accounts-service:
             provider: keycloak
             client-id: accounts-service
-            client-secret: ${ACCOUNTS_CLIENT_SECRET:92dkcPbazLPcy25UHQVwh602v0abCDpf}
+            client-secret: ${ACCOUNTS_CLIENT_SECRET}
             authorization-grant-type: client_credentials
         provider:
           keycloak:
-            issuer-uri: ${KEYCLOAK_URL:http://localhost:8080/realms/bank-app}
+            issuer-uri: ${KEYCLOAK_URL}
 
 services:
   notifications:
-    url: ${NOTIFICATIONS_URL:http://localhost:8082}
+    url: ${NOTIFICATIONS_URL}
 
 #logging:
 #  level:
 #    root: DEBUG
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+      probes:
+        enabled: true

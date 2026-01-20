@@ -1,0 +1,19 @@
+server:
+  port: 8084
+
+spring:
+  application:
+    name: accounts
+  main:
+    banner-mode: off
+  datasource:
+    url: ${PG_URL:jdbc:postgresql://localhost:5432/bankdb}
+    username: ${PG_USERNAME:postgres}
+    password: ${PG_PASSWORD:mysecretpassword}
+    driver-class-name: org.postgresql.Driver
+  liquibase:
+    change-log: "classpath:/db/changelog/db.changelog-master.yaml"
+
+services:
+  notifications:
+    url: ${NOTIFICATIONS_URL:http://localhost:8082}

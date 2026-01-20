@@ -5,14 +5,14 @@ import java.util.UUID;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.testcontainers.context.ImportTestcontainers;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import ru.bank.accounts.integration.PostgreSQLTestContainer;
 import ru.bank.accounts.models.Account;
 import ru.bank.accounts.repositories.AccountsJpaRepository;
 
-@SpringBootTest
+@DataJpaTest
 @Testcontainers
 @ImportTestcontainers({PostgreSQLTestContainer.class})
 class AccountsRepositoryTests {

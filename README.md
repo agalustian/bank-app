@@ -18,6 +18,8 @@ Test tools: `Spring boot test \ JUNIT 5 \ Jupiter \ Mockito \ TestContainers`
 
 Build tools: `Gradle`
 
+CI\CD: `k8s \ helm \ jenkins` - gateway + cash + transfer + accounts + notifications
+
 HTML templates: `Thymeleaf`
 
 Observability: `Actuator`
@@ -63,7 +65,17 @@ Build jar: `sh  ./gradlew build` - path `build/libs/[service]-0.0.1.jar`
 
 Build Dockerfile (in each module):  `sh ./scripts/build-docker-images.sh`
 
-Run infra (postgres, keycloak, consul): `sh ./scripts/start-infra`
+Run infra (postgres, keycloak): `sh ./scripts/start-infra`
+
+Helm release: `helm install bank ./bank-chart -n dev`
+
+Helm release uninstall: `helm uninstall bank -n dev`
+
+Check k8s pods: `kubectl get pods -n dev`
+
+Helm chart lint: `helm lint ./bank-chart`
+
+Helm chart tests: `helm test bank -n dev`
 
 ## Actuator endpoints
 Opened actuator endpoints list:

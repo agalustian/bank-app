@@ -9,20 +9,23 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: ${KEYCLOAK_URL:http://localhost:8080/realms/bank-app}
-  cloud:
-    consul:
-      host: ${CONSUL_URL:localhost}
-      port: ${CONSUL_PORT:8500}
-      config:
-        enabled: true
-        prefix: config
-        defaultContext: application
+          issuer-uri: ${KEYCLOAK_URL}
 
 services:
   accounts:
-    url: ${ACCOUNTS_URL:http://localhost:8084}
+    url: ${ACCOUNTS_URL}
   cash:
-    url: ${CASH_URL:http://localhost:8083}
+    url: ${CASH_URL}
   transfer:
-    url: ${TRANSFER_URL:http://localhost:8085}
+    url: ${TRANSFER_URL}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+      probes:
+        enabled: true

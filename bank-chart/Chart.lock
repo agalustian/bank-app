@@ -1,0 +1,21 @@
+dependencies:
+- name: postgresql
+  repository: https://charts.bitnami.com/bitnami
+  version: 18.2.0
+- name: gateway
+  repository: file://charts/gateway
+  version: 0.0.1
+- name: cash
+  repository: file://charts/cash
+  version: 0.0.1
+- name: transfer
+  repository: file://charts/transfer
+  version: 0.0.1
+- name: accounts
+  repository: file://charts/accounts
+  version: 0.0.1
+- name: notifications
+  repository: file://charts/notifications
+  version: 0.0.1
+digest: sha256:c64918c01efa7fe686324ef6cfd404808d5a661ff14386311c5fe995d1ab4a2b
+generated: "2026-01-18T18:48:14.786656+03:00"

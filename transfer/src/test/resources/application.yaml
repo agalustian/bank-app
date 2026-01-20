@@ -1,0 +1,21 @@
+server:
+  port: 8085
+
+spring:
+  application:
+    name: transfer
+  main:
+    banner-mode: off
+  datasource:
+    url: jdbc:postgresql://localhost:5432/bankdb
+    username: postgres
+    password: mysecretpassword
+    driver-class-name: org.postgresql.Driver
+  liquibase:
+    change-log: "classpath:/db/changelog/db.changelog-master.yaml"
+
+services:
+  notifications:
+    url: http://localhost:8082
+  accounts:
+    url: http://localhost:8084

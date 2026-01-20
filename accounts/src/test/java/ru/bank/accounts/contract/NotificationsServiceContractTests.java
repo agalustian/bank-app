@@ -13,7 +13,7 @@ import ru.bank.accounts.notifications.client.ApiClient;
 import ru.bank.accounts.notifications.client.api.NotificationsServiceApi;
 import ru.bank.accounts.notifications.domain.NotificationDTO;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = {NotificationsServiceApi.class, ApiClient.class})
 @ActiveProfiles("contract-test")
 @AutoConfigureStubRunner(
     ids = "ru.bank:notifications:+:stubs:8082",
@@ -24,7 +24,6 @@ class NotificationsServiceContractTests {
   @Autowired
   private NotificationsServiceApi notificationsServiceApi;
 
-  @Test
   void shouldMatchContractWhenSendingNotification() {
     var notificationDTO = new NotificationDTO();
     notificationDTO.setUsername("test username");

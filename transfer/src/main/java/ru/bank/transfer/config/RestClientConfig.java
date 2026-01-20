@@ -1,6 +1,5 @@
 package ru.bank.transfer.config;
 
-import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
@@ -18,7 +17,6 @@ public class RestClientConfig {
   }
 
   @Bean
-  @LoadBalanced
   public RestClient restClient(RestClient.Builder restClientBuilder) {
     return restClientBuilder.requestInterceptor(clientHttpRequestInterceptor()).build();
   }

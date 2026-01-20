@@ -1,0 +1,30 @@
+gateway:
+  replicaCount: 1
+  service:
+    type: NodePort
+
+cash:
+  replicaCount: 1
+  image:
+    tag: latest
+
+transfer:
+  replicaCount: 1
+  image:
+    tag: latest
+
+accounts:
+  replicaCount: 1
+  image:
+    tag: latest
+
+notifications:
+  replicaCount: 1
+  image:
+    tag: latest
+
+postgresql:
+  auth:
+    postgresPassword: "mysecretpassword"
+    username: "custom-user"
+    password: "mysecretpassword"

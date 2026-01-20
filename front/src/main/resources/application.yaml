@@ -22,7 +22,7 @@ spring:
             issuer-uri: ${KEYCLOAK_URL:http://localhost:8080/realms/bank-app}
 
 gateway:
-  path: ${GATEWAY_PATH:http://localhost:8079/api}
+  path: ${GATEWAY_PATH:http://localhost:30862/api}
 
 #logging:
 #  level:

@@ -1,3 +1,5 @@
+create schema accounts;
+
 insert into accounts (id, login, fullname, birthdate, amount)
 values
 ('a8552411-b929-40a7-a13a-ae1fa912232c', 'test', 'testov test testovich', '1988-10-11', 1111111),
