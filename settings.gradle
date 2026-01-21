@@ -1,3 +1,4 @@
 rootProject.name = 'bank'
 
+include('microservices-chassis')
 include('front', 'notifications', 'accounts', 'transfer', 'cash', 'gateway')
