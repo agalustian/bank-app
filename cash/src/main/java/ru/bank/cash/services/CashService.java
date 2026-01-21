@@ -1,11 +1,15 @@
 package ru.bank.cash.services;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import ru.bank.cash.models.NotificationOutbox;
 import ru.bank.cash.repositories.NotificationsOutboxJpaRepository;
 
 @Service
 public class CashService {
+
+  private final Logger logger = LoggerFactory.getLogger(CashService.class);
 
   private final NotificationsOutboxJpaRepository notificationsOutboxJpaRepository;
 
@@ -24,6 +28,8 @@ public class CashService {
     notificationsOutboxJpaRepository.save(
         new NotificationOutbox("Deposit for user" + account.getFullname() + "successfully processed",
             account.getFullname()));
+
+    logger.info("Deposit money successful to {}", account.getLogin());
   }
 
   public void withdrawalMoney(final Integer amount) {
@@ -33,6 +39,8 @@ public class CashService {
     notificationsOutboxJpaRepository.save(
         new NotificationOutbox("Withdrawal for user" + account.getFullname() + "successfully processed",
             account.getFullname()));
+
+    logger.info("Withdrawal money successful for {}", account.getLogin());
   }
 
 }
