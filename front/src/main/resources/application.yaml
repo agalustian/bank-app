@@ -6,6 +6,8 @@ spring:
     name: front
   main:
     banner-mode: off
+  config:
+    import: "optional:classpath:application-chassis.yaml"
   security:
     oauth2:
       client:
