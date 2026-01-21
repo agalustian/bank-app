@@ -1,0 +1,16 @@
+management:
+  zipkin:
+    tracing:
+      endpoint: ${ZIPKIN_ENDPOINT}
+  tracing:
+    sampling:
+      probability: 1
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+      probes:
+        enabled: true
