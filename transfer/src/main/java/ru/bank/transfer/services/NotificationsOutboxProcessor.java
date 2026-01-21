@@ -10,6 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import ru.bank.chassis.dto.NotificationDTO;
 import ru.bank.transfer.models.NotificationOutbox;
 import ru.bank.transfer.repositories.NotificationsOutboxJpaRepository;
 
@@ -33,10 +34,6 @@ public class NotificationsOutboxProcessor {
     this.notificationsOutboxJpaRepository = notificationsOutboxJpaRepository;
   }
 
-  // TODO use schema registry istead copy paste
-  public static record Notification(String username, String text) {
-  }
-
   @Scheduled(fixedDelayString = "PT1s")
   public void processBySchedule() {
     process();
@@ -49,7 +46,7 @@ public class NotificationsOutboxProcessor {
     List<Long> processedIds = new ArrayList<>();
     for (NotificationOutbox notificationOutbox: outboxNotifications) {
       try {
-        kafkaTemplate.send(notificationsTopic, notificationOutbox.getUsername(), new Notification(notificationOutbox.getUsername(), notificationOutbox.getText()));
+        kafkaTemplate.send(notificationsTopic, notificationOutbox.getUsername(), new NotificationDTO(notificationOutbox.getUsername(), notificationOutbox.getText()));
         processedIds.add(notificationOutbox.getId());
       } catch (RuntimeException e) {
         logger.error("Exception occurred on sending notifications to: {}, error: {}", notificationOutbox.getUsername(), e.getStackTrace());
