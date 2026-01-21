@@ -12,6 +12,12 @@ dependencies:
   - name: kafka
     version: "18.0.1"
     repository: "https://helm-charts.itboon.top/kafka"
+  - name: kube-prometheus-stack
+    version: "81.2.0"
+    repository: "https://prometheus-community.github.io/helm-charts"
+  - name: grafana
+    version: "10.5.8"
+    repository: "https://grafana.github.io/helm-charts"
   - name: gateway
     version: "0.0.1"
     repository: "file://charts/gateway"

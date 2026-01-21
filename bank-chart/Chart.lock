@@ -8,6 +8,12 @@ dependencies:
 - name: kafka
   repository: https://helm-charts.itboon.top/kafka
   version: 18.0.1
+- name: kube-prometheus-stack
+  repository: https://prometheus-community.github.io/helm-charts
+  version: 81.2.0
+- name: grafana
+  repository: https://grafana.github.io/helm-charts
+  version: 10.5.8
 - name: gateway
   repository: file://charts/gateway
   version: 0.0.1
@@ -23,5 +29,5 @@ dependencies:
 - name: notifications
   repository: file://charts/notifications
   version: 0.0.1
-digest: sha256:65059ed8159873c4de19362bb7401409e793ac715d006d2dc6489b1f2277e7f0
-generated: "2026-01-22T01:05:32.218987+03:00"
+digest: sha256:4c14ff98ec876798bc9590b7831ce4ef26d6986002c8e47aaeaa80040b30f2aa
+generated: "2026-01-22T01:24:44.274372+03:00"
