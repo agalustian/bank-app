@@ -14,6 +14,13 @@ spring:
   liquibase:
     change-log: "classpath:/db/changelog/db.changelog-master.yaml"
     default-schema: "cash"
+  kafka:
+    bootstrap-servers: ${KAFKA_HOST}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      topics:
+        notifications: ${NOTIFICATIONS_TOPIC:notifications}
   security:
     oauth2:
       resourceserver:

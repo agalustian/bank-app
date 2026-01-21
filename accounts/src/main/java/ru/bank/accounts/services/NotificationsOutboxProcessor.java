@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import ru.bank.accounts.models.NotificationOutbox;
@@ -18,16 +19,22 @@ public class NotificationsOutboxProcessor {
   @Value("${NOTIFICATIONS_OUTBOX_LIMIT:10}")
   private Integer limit = 10;
 
-  private final NotificationsOutboxJpaRepository notificationsOutboxJpaRepository;
+  @Value("${spring.kafka.producer.topics.notifications}")
+  private String notificationsTopic;
 
-  private final NotificationsService notificationsService;
+  private final NotificationsOutboxJpaRepository notificationsOutboxJpaRepository;
 
   private final Logger logger = LoggerFactory.getLogger(NotificationsOutboxProcessor.class);
 
-  public NotificationsOutboxProcessor(NotificationsOutboxJpaRepository notificationsOutboxJpaRepository,
-                                      NotificationsService notificationsService) {
+  private final KafkaTemplate kafkaTemplate;
+
+  public NotificationsOutboxProcessor(KafkaTemplate kafkaTemplate, NotificationsOutboxJpaRepository notificationsOutboxJpaRepository) {
+    this.kafkaTemplate = kafkaTemplate;
     this.notificationsOutboxJpaRepository = notificationsOutboxJpaRepository;
-    this.notificationsService = notificationsService;
+  }
+
+  // TODO use schema registry istead copy paste
+  public static record Notification(String username, String text) {
   }
 
   @Scheduled(fixedDelayString = "PT1s")
@@ -36,14 +43,13 @@ public class NotificationsOutboxProcessor {
   }
 
   public void process() {
-    // TODO use sorting
     var outboxNotifications =
         notificationsOutboxJpaRepository.findAll(PageRequest.of(0, limit).withSort(Sort.by("id"))).getContent();
 
     List<Long> processedIds = new ArrayList<>();
     for (NotificationOutbox notificationOutbox: outboxNotifications) {
       try {
-        notificationsService.sendNotification(notificationOutbox.getUsername(), notificationOutbox.getText());
+        kafkaTemplate.send(notificationsTopic, notificationOutbox.getUsername(), new Notification(notificationOutbox.getUsername(), notificationOutbox.getText()));
         processedIds.add(notificationOutbox.getId());
       } catch (RuntimeException e) {
         logger.error("Exception occurred on sending notifications to: {}, error: {}", notificationOutbox.getUsername(), e.getStackTrace());

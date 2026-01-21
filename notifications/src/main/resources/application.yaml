@@ -6,11 +6,18 @@ spring:
     name: notifications
   main:
     banner-mode: off
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: ${KEYCLOAK_URL}
+  kafka:
+    bootstrap-servers: ${KAFKA_HOST:192.168.5.15:9095}
+    consumer:
+      group-id: bank-notifications-service-group
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      auto-offset-reset: latest
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: "*"
 
 management:
   endpoints:
