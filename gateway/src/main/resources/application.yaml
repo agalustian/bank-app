@@ -5,6 +5,8 @@ spring:
     name: application-gateway
   main:
     banner-mode: off
+  config:
+    import: "optional:classpath:application-chassis.yaml"
   security:
     oauth2:
       resourceserver:
