@@ -1,19 +1,19 @@
-apiVersion: monitoring.coreos.com/v1
-kind: PrometheusRule
-metadata:
-  name: notification-sending-alert
-  namespace: {{ .Release.Namespace }}
-  labels:
-    release: prometheus-stack
-spec:
-  groups:
-    - name: orders.rules
-      rules:
-        - alert: LowOrderRate
-          expr: sum(rate(send_notification_error[1m])) > 10
-          for: 1m
-          labels:
-            severity: warning
-          annotations:
-            summary: "Превышено максимальное число ошибок отправки уведомлений"
-            description: "Количество ошибок увеличилось до 10 в течение последней минуты."
+#apiVersion: monitoring.coreos.com/v1
+#kind: PrometheusRule
+#metadata:
+#  name: notification-sending-alert
+#  namespace: {{ .Release.Namespace }}
+#  labels:
+#    release: prometheus-stack
+#spec:
+#  groups:
+#    - name: orders.rules
+#      rules:
+#        - alert: LowOrderRate
+#          expr: sum(rate(send_notification_error[1m])) > 10
+#          for: 1m
+#          labels:
+#            severity: warning
+#          annotations:
+#            summary: "Превышено максимальное число ошибок отправки уведомлений"
+#            description: "Количество ошибок увеличилось до 10 в течение последней минуты."

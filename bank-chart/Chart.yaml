@@ -18,6 +18,15 @@ dependencies:
   - name: grafana
     version: "10.5.8"
     repository: "https://grafana.github.io/helm-charts"
+  - name: logstash
+    version: "8.5.1"
+    repository: "file://charts/logstash"
+  - name: kibana
+    version: "8.5.1"
+    repository: "file://charts/kibana"
+  - name: elasticsearch
+    version: "8.5.1"
+    repository: "file://charts/elasticsearch"
   - name: gateway
     version: "0.0.1"
     repository: "file://charts/gateway"

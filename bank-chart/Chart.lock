@@ -1,0 +1,42 @@
+dependencies:
+- name: postgresql
+  repository: https://charts.bitnami.com/bitnami
+  version: 18.2.0
+- name: zipkin
+  repository: file://charts/zipkin
+  version: 1.3.11
+- name: kafka
+  repository: https://helm-charts.itboon.top/kafka
+  version: 18.0.1
+- name: prometheus
+  repository: file://charts/prometheus
+  version: 81.2.0
+- name: grafana
+  repository: https://grafana.github.io/helm-charts
+  version: 10.5.8
+- name: logstash
+  repository: file://charts/logstash
+  version: 8.5.1
+- name: kibana
+  repository: file://charts/kibana
+  version: 8.5.1
+- name: elasticsearch
+  repository: file://charts/elasticsearch
+  version: 8.5.1
+- name: gateway
+  repository: file://charts/gateway
+  version: 0.0.1
+- name: cash
+  repository: file://charts/cash
+  version: 0.0.1
+- name: transfer
+  repository: file://charts/transfer
+  version: 0.0.1
+- name: accounts
+  repository: file://charts/accounts
+  version: 0.0.1
+- name: notifications
+  repository: file://charts/notifications
+  version: 0.0.1
+digest: sha256:bae0e8bba5e9bb974cba0806ed5dbd1329af78739c0ca327d2802f9a18c3a4ac
+generated: "2026-01-22T02:24:57.914348+03:00"

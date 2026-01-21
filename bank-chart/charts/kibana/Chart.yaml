@@ -1,0 +1,8 @@
+apiVersion: v2
+name: kibana
+description: Kibana chart
+version: 8.5.1
+dependencies:
+  - name: kibana
+    version: "8.5.1"
+    repository: "elastic/kibana"

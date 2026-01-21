@@ -77,6 +77,12 @@ Helm chart lint: `helm lint ./bank-chart`
 
 Helm chart tests: `helm test bank -n dev`
 
+Kibana installation: `helm install kibana elastic/kibana -f ./charts/kibana/values.yaml -n dev`
+
+Elasticsearch installation: `helm install elasticsearch elastic/elasticsearch -f ./charts/elasticsearch/values.yaml -n dev`
+
+Logstash installation: `helm install logstash elastic/logstash -f ./charts/logstash/values.yaml -n dev`
+
 ## Actuator endpoints
 Opened actuator endpoints list:
 - health

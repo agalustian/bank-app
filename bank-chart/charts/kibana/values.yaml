@@ -1,0 +1,13 @@
+replicaCount: 1
+elasticsearchHosts: "http://bank-elasticsearch:9200"
+
+service:
+  type: ClusterIP
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 1Gi
+  requests:
+    cpu: 250m
+    memory: 512Mi
