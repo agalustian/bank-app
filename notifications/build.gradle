@@ -33,7 +33,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'ru.bank:microservices-chassis:0.0.8'
+    implementation 'ru.bank:microservices-chassis:0.0.9'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.kafka:spring-kafka-test'
