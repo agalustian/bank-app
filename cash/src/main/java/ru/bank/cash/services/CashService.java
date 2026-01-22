@@ -1,5 +1,6 @@
 package ru.bank.cash.services;
 
+import io.micrometer.core.instrument.MeterRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -15,10 +16,13 @@ public class CashService {
 
   private final AccountsService accountsService;
 
+  private final MeterRegistry meterRegistry;
+
   public CashService(NotificationsOutboxJpaRepository notificationsOutboxJpaRepository,
-                     AccountsService accountsService) {
+                     AccountsService accountsService, MeterRegistry meterRegistry) {
     this.notificationsOutboxJpaRepository = notificationsOutboxJpaRepository;
     this.accountsService = accountsService;
+    this.meterRegistry = meterRegistry;
   }
 
   public void depositMoney(final Integer amount) {
@@ -35,12 +39,18 @@ public class CashService {
   public void withdrawalMoney(final Integer amount) {
     var account = accountsService.getAccount();
 
-    accountsService.withdrawal(account, amount);
-    notificationsOutboxJpaRepository.save(
-        new NotificationOutbox("Withdrawal for user" + account.getFullname() + "successfully processed",
-            account.getFullname()));
+    try {
+      accountsService.withdrawal(account, amount);
+      notificationsOutboxJpaRepository.save(
+          new NotificationOutbox("Withdrawal for user" + account.getFullname() + "successfully processed",
+              account.getFullname()));
 
-    logger.info("Withdrawal money successful for {}", account.getLogin());
+      logger.info("Withdrawal money successful for {}", account.getLogin());
+    } catch (RuntimeException e) {
+      meterRegistry.counter("withdrawal_error", "from", account.getLogin()).increment();
+
+      throw e;
+    }
   }
 
 }
