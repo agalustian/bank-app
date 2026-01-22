@@ -1,5 +1,7 @@
 package ru.bank.transfer.services;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.bank.transfer.dto.TransferDTO;
@@ -10,6 +12,8 @@ import ru.bank.transfer.repositories.NotificationsOutboxJpaRepository;
 
 @Service
 public class TransferService {
+
+  private final Logger logger = LoggerFactory.getLogger(TransferService.class);
 
   private final AccountsService accountsService;
 
@@ -35,6 +39,8 @@ public class TransferService {
         new NotificationOutbox("Withdrawal money success", fromAccount.getFullname()));
 
     depositOutboxJpaRepository.save(new DepositOutbox(login, transferDTO.to(), transferDTO.amount()));
+
+    logger.info("Transfer successful for: {}", login);
   }
 
 }
