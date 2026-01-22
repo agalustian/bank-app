@@ -1,5 +1,5 @@
 replicaCount: 1
-elasticsearchHosts: "http://bank-elasticsearch:9200"
+elasticsearchHosts: "https://elasticsearch-master:9200"
 
 service:
   type: ClusterIP

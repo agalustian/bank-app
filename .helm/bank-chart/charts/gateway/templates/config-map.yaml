@@ -8,4 +8,4 @@ data:
   ACCOUNTS_URL: http://bank-accounts:8084
   CASH_URL: http://bank-cash:8083
   TRANSFER_URL: http://bank-transfer:8085
-  ZIPKIN_ENDPOINT: http://bank-zipkin:9411/api/v2/spans
+  ZIPKIN_ENDPOINT: http://zipkin:9411/api/v2/spans

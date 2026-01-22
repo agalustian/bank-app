@@ -9,4 +9,4 @@ data:
   NOTIFICATIONS_URL: http://bank-notifications:8082
   ACCOUNTS_URL: http://bank-accounts:8084
   KAFKA_HOST: bank-kafka-broker:9092
-  ZIPKIN_ENDPOINT: http://bank-zipkin:9411/api/v2/spans
+  ZIPKIN_ENDPOINT: http://zipkin:9411/api/v2/spans

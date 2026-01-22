@@ -12,20 +12,25 @@ replicas: 1
 
 resources:
   requests:
-    cpu: "1000m"
-    memory: "2Gi"
+    cpu: "100m"
+    memory: "750Mi"
   limits:
-    cpu: "2000m"
-    memory: "2Gi"
+    cpu: "1000m"
+    memory: "750Mi"
 
-esJavaOpts: "-Xmx1g -Xms1g"
+esJavaOpts: "-Xmx512m -Xms512m"
+discovery:
+  type: single-node
+
+xpack:
+  security:
+    enabled: false
 
 persistence:
   enabled: true
   storageClass: "standard"
-  size: 2Gi
+  size: 1Gi
 
 esConfig:
   elasticsearch.yml: |
     network.host: 0.0.0.0
-    indices.requests.cache.size: 2%

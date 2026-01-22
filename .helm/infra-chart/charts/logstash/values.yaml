@@ -15,7 +15,7 @@ logstashPipeline:
     }
       output {
         elasticsearch {
-          hosts => ["http://bank-elasticsearch:9200"]
+          hosts => ["http://elasticsearch-master:9200"]
           index => "logs-%{+dd.MM.YYYY}"
           retry_on_conflict => 3
           action => "index"
