@@ -1,3 +1,0 @@
-- pipeline.id: bank-pipeline
-  path.config: "/home/gal/Study/bank-app/bank-chart/charts/logstash/pipeline.conf"
-  pipeline.workers: 3

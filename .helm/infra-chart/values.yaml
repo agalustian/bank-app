@@ -1,0 +1,14 @@
+postgresql:
+  auth:
+    postgresPassword: "mysecretpassword"
+    username: "custom-user"
+    password: "mysecretpassword"
+
+zipkin:
+  storageType: mem
+  cassandra:
+    enabled: false
+  service:
+    type: NodePort
+    nodePorts:
+      http: 30000

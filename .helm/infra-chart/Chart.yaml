@@ -1,0 +1,29 @@
+apiVersion: v2
+name: umbrella-chart
+description: An umbrella Helm chart to deploy core bank APP microservices
+version: 1.0.0
+dependencies:
+  - name: postgresql
+    version: "18.2.0"
+    repository: "https://charts.bitnami.com/bitnami"
+  - name: zipkin
+    version: "1.3.11"
+    repository: "file://charts/zipkin"
+  - name: kafka
+    version: "18.0.1"
+    repository: "https://helm-charts.itboon.top/kafka"
+  - name: prometheus
+    version: "81.2.0"
+    repository: "file://charts/prometheus"
+  - name: grafana
+    version: "10.5.8"
+    repository: "file://charts/grafana"
+  - name: logstash
+    version: "8.5.1"
+    repository: "file://charts/logstash"
+  - name: kibana
+    version: "8.5.1"
+    repository: "file://charts/kibana"
+  - name: elasticsearch
+    version: "8.5.1"
+    repository: "file://charts/elasticsearch"

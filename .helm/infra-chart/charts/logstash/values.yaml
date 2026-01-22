@@ -1,0 +1,23 @@
+logstashPipeline:
+  logstash.conf: |
+    input {
+      kafka {
+        bootstrap_servers => "bank-kafka-broker:9092"
+        topics => ["bank-services-logs"]
+        group_id => "yandex-group"
+        decorate_events => extended
+      }
+    }
+      filter {
+        mutate {
+          copy => { "[@metadata][kafka][topic]" => "source"}
+        }
+    }
+      output {
+        elasticsearch {
+          hosts => ["http://bank-elasticsearch:9200"]
+          index => "logs-%{+dd.MM.YYYY}"
+          retry_on_conflict => 3
+          action => "index"
+        }
+    }

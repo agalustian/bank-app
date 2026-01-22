@@ -1,0 +1,31 @@
+livenessProbe:
+  httpGet:
+    path: /
+    port: http
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  failureThreshold: 3
+  timeoutSeconds: 5
+
+clusterName: "elasticsearch"
+replicas: 1
+
+resources:
+  requests:
+    cpu: "1000m"
+    memory: "2Gi"
+  limits:
+    cpu: "2000m"
+    memory: "2Gi"
+
+esJavaOpts: "-Xmx1g -Xms1g"
+
+persistence:
+  enabled: true
+  storageClass: "standard"
+  size: 2Gi
+
+esConfig:
+  elasticsearch.yml: |
+    network.host: 0.0.0.0
+    indices.requests.cache.size: 2%
