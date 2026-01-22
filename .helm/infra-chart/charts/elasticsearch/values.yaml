@@ -13,14 +13,12 @@ replicas: 1
 resources:
   requests:
     cpu: "100m"
-    memory: "750Mi"
+    memory: "1Gi"
   limits:
-    cpu: "1000m"
-    memory: "750Mi"
+    cpu: "500m"
+    memory: "1Gi"
 
 esJavaOpts: "-Xmx512m -Xms512m"
-discovery:
-  type: single-node
 
 xpack:
   security:
@@ -33,4 +31,5 @@ persistence:
 
 esConfig:
   elasticsearch.yml: |
+    xpack.security.enabled: false
     network.host: 0.0.0.0
