@@ -6,6 +6,8 @@ spring:
     name: transfer
   main:
     banner-mode: off
+  config:
+    import: "optional:classpath:application-chassis.yaml"
   datasource:
     url: ${PG_URL}?currentSchema=transfer
     username: ${PG_USERNAME}

@@ -11,6 +11,7 @@ import org.mockito.Mockito;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.kafka.core.KafkaTemplate;
+import ru.bank.chassis.dto.NotificationDTO;
 import ru.bank.transfer.models.NotificationOutbox;
 import ru.bank.transfer.repositories.NotificationsOutboxJpaRepository;
 import ru.bank.transfer.services.NotificationsOutboxProcessor;
@@ -36,7 +37,7 @@ class NotificationsOutboxProcessorTests {
 
     verify(notificationsOutboxJpaRepository, times(1)).findAll(any(PageRequest.class));
     verify(kafkaTemplate, times(1)).send(null, "username",
-        new NotificationsOutboxProcessor.Notification("username", "test text"));
+        new NotificationDTO("username", "test text"));
     verify(notificationsOutboxJpaRepository, times(1)).deleteAllByIdInBatch(List.of(1L));
   }
 

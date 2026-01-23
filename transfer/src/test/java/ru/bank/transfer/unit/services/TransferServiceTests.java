@@ -4,6 +4,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+import io.micrometer.core.instrument.MeterRegistry;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
@@ -22,6 +23,8 @@ class TransferServiceTests {
 
   private final AccountsService accountsService = Mockito.mock(AccountsService.class);
 
+  private final MeterRegistry meterRegistry = Mockito.mock(MeterRegistry.class);
+
   private final NotificationsOutboxJpaRepository notificationsOutboxJpaRepository =
       Mockito.mock(NotificationsOutboxJpaRepository.class);
 
@@ -29,7 +32,7 @@ class TransferServiceTests {
       Mockito.mock(DepositOutboxJpaRepository.class);
 
   private final TransferService transferService =
-      new TransferService(accountsService, notificationsOutboxJpaRepository, depositOutboxJpaRepository);
+      new TransferService(accountsService, notificationsOutboxJpaRepository, depositOutboxJpaRepository, meterRegistry);
 
   private AccountDTO generateAccountDTO() {
     var accountDTO = new AccountDTO();

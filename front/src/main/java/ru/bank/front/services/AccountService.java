@@ -1,5 +1,7 @@
 package ru.bank.front.services;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import ru.bank.front.accounts.client.api.AccountsServiceApi;
 import ru.bank.front.accounts.domain.AccountDTO;
@@ -16,6 +18,8 @@ import ru.bank.front.transfer.domain.TransferDTO;
 
 @Service
 public class AccountService {
+
+  private final Logger logger = LoggerFactory.getLogger(AccountService.class);
 
   private final AccountsServiceApi accountsServiceApi;
 
@@ -61,9 +65,11 @@ public class AccountService {
         case PUT -> cashServiceApi.depositMoney(amountDTO);
       }
 
+      logger.info("Editing cash successfully for: {}", accountDTO.getLogin());
       message = "Успешно выполнено";
     } catch (RuntimeException e) {
       errors = List.of("Не удалось произвести операцию");
+      logger.error("Exception during editing cash: {}", e.getMessage());
     }
 
     return new EditCashResult(accountDTO, message, errors);
@@ -80,8 +86,10 @@ public class AccountService {
     try {
       transferServiceApi.transferMoney(login, transferDTO);
       message = "Успешно переведено %d руб клиенту %s".formatted(amount, accountDTO.getFullname());
+      logger.info("Transfer successfully for: {}", accountDTO.getLogin());
     } catch (RuntimeException e) {
       errors = List.of("Недостаточно средств на счету");
+      logger.error("Exception during transfer: {}", e.getMessage());
     }
 
     return new TransferResult(accountDTO, message, errors);

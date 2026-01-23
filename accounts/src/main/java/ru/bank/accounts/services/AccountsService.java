@@ -3,6 +3,8 @@ package ru.bank.accounts.services;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -21,6 +23,8 @@ public class AccountsService {
   private final AccountsJpaRepository accountsJpaRepository;
 
   private final NotificationsOutboxJpaRepository notificationsOutboxJpaRepository;
+
+  private final Logger logger = LoggerFactory.getLogger(AccountsService.class);
 
   public AccountsService(AccountsJpaRepository accountsJpaRepository,
                          NotificationsOutboxJpaRepository notificationsOutboxJpaRepository) {
@@ -66,6 +70,8 @@ public class AccountsService {
             accountDTO.amount());
 
     accountsJpaRepository.save(updated);
+
+    logger.info("Account updated for {}", login);
 
     return AccountDTO.from(updated);
   }

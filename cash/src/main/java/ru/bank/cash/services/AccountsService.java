@@ -1,11 +1,15 @@
 package ru.bank.cash.services;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import ru.bank.cash.accounts.client.api.AccountsServiceApi;
 import ru.bank.cash.accounts.domain.AccountDTO;
 
 @Service
 public class AccountsService {
+
+  private final Logger logger = LoggerFactory.getLogger(AccountsService.class);
 
   private final AccountsServiceApi accountsServiceApi;
 
@@ -21,6 +25,8 @@ public class AccountsService {
     accountDTO.setAmount(account.getAmount() + amount);
 
     accountsServiceApi.updateAccount(account.getLogin(), accountDTO);
+
+    logger.info("Deposit successful to {}", account.getLogin());
   }
 
   public void withdrawal(final AccountDTO account, final Integer amount) {
@@ -31,6 +37,8 @@ public class AccountsService {
     accountDTO.setAmount(account.getAmount() - amount);
 
     accountsServiceApi.updateAccount(account.getLogin(), accountDTO);
+
+    logger.info("Withdrawal successful for {}", account.getLogin());
   }
 
   public AccountDTO getAccount() {

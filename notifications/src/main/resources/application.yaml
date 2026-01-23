@@ -6,6 +6,8 @@ spring:
     name: notifications
   main:
     banner-mode: off
+  config:
+    import: "optional:classpath:application-chassis.yaml"
   kafka:
     bootstrap-servers: ${KAFKA_HOST:192.168.5.15:9095}
     consumer:
@@ -18,14 +20,3 @@ spring:
           json:
             trusted:
               packages: "*"
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: health,info,metrics
-  endpoint:
-    health:
-      show-details: always
-      probes:
-        enabled: true

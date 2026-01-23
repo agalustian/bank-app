@@ -4,6 +4,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+import io.micrometer.core.instrument.MeterRegistry;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.UUID;
@@ -18,11 +19,12 @@ import ru.bank.cash.services.CashService;
 class CashServiceTests {
 
   private final AccountsService accountsService = Mockito.mock(AccountsService.class);
+  private final MeterRegistry meterRegistry = Mockito.mock(MeterRegistry.class);
   private final NotificationsOutboxJpaRepository notificationsOutboxJpaRepository =
       Mockito.mock(NotificationsOutboxJpaRepository.class);
 
   private final CashService cashService =
-      new CashService(notificationsOutboxJpaRepository, accountsService);
+      new CashService(notificationsOutboxJpaRepository, accountsService, meterRegistry);
 
   private AccountDTO generateAccountDTO() {
     var accountDTO = new AccountDTO();

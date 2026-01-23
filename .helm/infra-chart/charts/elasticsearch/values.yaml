@@ -1,0 +1,35 @@
+livenessProbe:
+  httpGet:
+    path: /
+    port: http
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  failureThreshold: 3
+  timeoutSeconds: 5
+
+clusterName: "elasticsearch"
+replicas: 1
+
+resources:
+  requests:
+    cpu: "100m"
+    memory: "1Gi"
+  limits:
+    cpu: "500m"
+    memory: "1Gi"
+
+esJavaOpts: "-Xmx512m -Xms512m"
+
+xpack:
+  security:
+    enabled: false
+
+persistence:
+  enabled: true
+  storageClass: "standard"
+  size: 1Gi
+
+esConfig:
+  elasticsearch.yml: |
+    xpack.security.enabled: false
+    network.host: 0.0.0.0

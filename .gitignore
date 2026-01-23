@@ -36,3 +36,5 @@ out/
 .vscode/
 jenkins/.env
 *.env
+
+*.tgz

@@ -1,18 +1,40 @@
 plugins {
     id 'java'
+    id 'java-library'
+    id 'maven-publish'
+    id "org.springframework.boot" version "3.5.6"
+    id "io.spring.dependency-management" version "1.1.7"
 }
 
 group = 'ru.bank'
-version = 'unspecified'
+version = '0.0.15'
 
 repositories {
+    mavenLocal()
     mavenCentral()
 }
 
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+}
+
 dependencies {
-    testImplementation platform('org.junit:junit-bom:5.10.0')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    api 'org.slf4j:slf4j-api:2.0.16'
+    api 'org.springframework.kafka:spring-kafka'
+    api 'org.springframework.boot:spring-boot-starter-actuator'
+    api 'org.springframework.boot:spring-boot-starter-web'
+    api 'org.springframework.boot:spring-boot-starter-validation'
+    api 'com.fasterxml.jackson.core:jackson-databind'
+    api 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
+    api 'io.micrometer:micrometer-tracing-bridge-brave'
+    api 'io.zipkin.reporter2:zipkin-reporter-brave'
+    api 'io.micrometer:micrometer-registry-prometheus'
+
+    compileOnly 'org.apache.logging.log4j:log4j-slf4j2-impl:2.24.3'
 }
 
 test {

@@ -6,6 +6,8 @@ spring:
     name: accounts
   main:
     banner-mode: off
+  config:
+    import: "optional:classpath:application-chassis.yaml"
   datasource:
     url: ${PG_URL}?currentSchema=accounts
     username: ${PG_USERNAME}
